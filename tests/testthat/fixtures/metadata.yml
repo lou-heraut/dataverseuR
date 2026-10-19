@@ -1,0 +1,170 @@
+# ░█▀▄░█▀▀▄░▀█▀░█▀▀▄░▄░░░▄░█▀▀░█▀▀▄░█▀▀░█▀▀░█░▒█░▒█▀▀▄
+# ░█░█░█▄▄█░░█░░█▄▄█░░█▄█░░█▀▀░█▄▄▀░▀▀▄░█▀▀░█░▒█░▒█▄▄▀
+# ░▀▀░░▀░░▀░░▀░░▀░░▀░░░▀░░░▀▀▀░▀░▀▀░▀▀▀░▀▀▀░░▀▀▀░▒█░▒█ _______________
+# GitHub : https://github.com/lou-heraut/dataverseuR
+# Author : Héraut, Louis
+# Affiliation : INRAE, UR RiverLy, Villeurbanne, France
+# ORCID : 0009-0006-4372-0923
+#
+# This file is a parameterization file used by the dataverseuR R
+# package to generate a metadata JSON file needed by the Dataverse API
+# to create or modify a dataset.
+
+title: Indicateurs de changements par horizons TRACC issus des projections hydrologiques
+  Explore2 du débit pour le modèle J2000 sous RCP 8.5 (référence 1976-2005)
+
+alternativeURL: https://www.drias-eau.fr/commande
+
+datasetContact:
+- datasetContactName: Héraut, Louis
+  datasetContactAffiliation: INRAE, UR RiverLy, Villeurbanne, France
+  datasetContactEmail: louis.heraut@inrae.fr
+- datasetContactName: Sauquet, Éric
+  datasetContactAffiliation: INRAE, UR RiverLy, Villeurbanne, France
+  datasetContactEmail: eric.sauquet@inrae.fr
+
+author:
+- authorName: Héraut, Louis
+  authorAffiliation: INRAE, UR RiverLy, Villeurbanne, France
+  authorIdentifierScheme: ORCID
+  authorIdentifier: 0009-0006-4372-0923
+
+contributor:
+- contributorType: Project Manager
+  contributorName: Sauquet, Éric
+  contributorAffiliation: INRAE, UR RiverLy, Villeurbanne, France
+  contributorIdentifierScheme: ORCID
+  contributorIdentifier: 0000-0001-9539-7730
+- contributorType: Researcher
+  contributorName: Vidal, Jean-Philippe
+  contributorAffiliation: INRAE, UR RiverLy, Villeurbanne, France
+  contributorIdentifierScheme: ORCID
+  contributorIdentifier: 0000-0002-3748-6150
+
+producer:
+- producerName: Explore2
+  producerURL: https://professionnels.ofb.fr/fr/node/1244
+  producerLogoURL: https://entrepot.recherche.data.gouv.fr/logos/202158/LogoExplore2.png
+
+distributor:
+- distributorName: Entrepôt-Catalogue Recherche Data Gouv
+  distributorURL: https://entrepot.recherche.data.gouv.fr
+  distributorLogoURL: https://s3.fr-par.scw.cloud/rdg-portal/logos-macarons/Macarons%20Recherche%20Data%20Gouv_Entrep%C3%B4t.png
+
+dsDescription:
+- dsDescriptionValue: |-
+    Indicateurs de changements par horizons TRACC issus des débits journaliers simulés par le modèle hydrologique J2000 pour l'ensemble des projections climatiques Explore2 sous RCP 8.5. Ces fichiers résultent de l'agrégation temporelle des simulations hydrologiques sous runs historiques (avant 2005) et des projections hydrologiques (post 2005), fichiers NetCDF disponibles au téléchargement dans la collection <a href='https://entrepot.recherche.data.gouv.fr/dataverse/explore2-projections_hydrologiques'>Explore2 - Projections hydrologiques</a>.<br><br>
+
+    Ce dépôt regroupe un tableau 2D par indicateur et chaîne de simulation, c'est-à-dire, scénario d'émission RCP, couple GCM/RCM, correction de biais BC et modèle hydrologique HM. Ces données sont brutes et contiennent donc des chaînes de projections jugées aberrantes / horsains qu'il est possible de filter grâce à des <a href='https://doi.org/10.57745/YZNENQ'>métadonnées supplémentaires</a>. Pour des raisons techniques, ces indicateurs sont regroupés par dossiers compressés selon les différentes parties du régime hydrologique. Retrouvez davantage d'information sur la chaîne de modélisation du climat dans le rapport <a href='https://doi.org/10.57745/PUR7ML'>https://doi.org/10.57745/PUR7ML</a>.<br><br>
+
+    La description des modèles hydrologiques utilisés est disponible dans les annexes du rapport <a href='https://doi.org/10.57745/S6PQXD'>https://doi.org/10.57745/S6PQXD</a>. Retrouvez le diagnostic des modèles hydrologiques résumé à l'échelle des régions hydrologiques dans les fiches téléchargeables ici : <a href='https://doi.org/10.57745/DMFUXW'>https://doi.org/10.57745/DMFUXW</a>.<br><br>
+
+    <b>Définition des 4 narratifs hydrologiques</b> :<br>
+    L'ensemble des descriptions des narratifs hydrologique définit dans le cadre de la TRACC par niveau de réchauffement est défini ici : <a href='https://doi.org/10.57745/KAHIWJ'>https://doi.org/10.57745/KAHIWJ</a>.<br><br>
+
+    <b>Métadonnées supplémentaires</b> : <ul>
+    <li>Récapitulatif de l'ensemble des indicateurs hydrologiques : <a href='https://doi.org/10.57745/JVNHQL'>https://doi.org/10.57745/JVNHQL</a></li>
+    <li>Récapitulatif de l'ensemble des chaînes de simulation : <a href='https://doi.org/10.57745/R6HG5X'>https://doi.org/10.57745/R6HG5X</a></li>
+    <li>Description de l'ensemble des points de simulation : <a href='https://doi.org/10.57745/UTKWR5'>https://doi.org/10.57745/UTKWR5</a></li>
+    <li>Liste des simulations des chaînes de projections jugées aberrantes / horsains : <a href='https://doi.org/10.57745/YZNENQ'>https://doi.org/10.57745/YZNENQ</a></li>
+    <li>Récapitulatif des années pivots utilisées pour la TRACC : <a href='https://doi.org/10.57745/DCOQM6'>https://doi.org/10.57745/DCOQM6</a></li></ul>
+
+    <b>Décomposition des chaînes de caractères formant le nom des fichiers parquet, séparées par des "_"</b> :<br>
+    {1} <i>Indicateur</i> : Le nom de l’indicateur, du type de statistique observée<br>
+    {2} <i>Échantillonnage</i> : Échantillonnage temporel sur laquelle est calculé l’indicateur<br>
+    &#8594; {1}_{2} <i>Variable</i> : Variable résultante d'un indicateur temporellement contextualisé<br>
+    {3} <i>RWL</i> : Horizon TRACC (RWL-(20|27|40))<br>
+    &#8594; {1}_{2}_{3} <i>Changement</i> : Changement d'une variable pour un horizon TRACC par rapport à une période de référence, défini dans le <a href='https://doi.org/10.57745/JVNHQL'>récapitulatif des indicateurs hydrologiques</a><br>
+    {4} <i>EXP</i> : Identifiant de l’expérience historique ou future via le scénario<br>
+    {5} <i>GCM</i> : Identifiant du GCM forçeur<br>
+    {6} <i>RCM</i> : Identifiant du RCM<br>
+    {7} <i>BC</i> : Identifiant de la méthode de correction de biais statistique<br>
+    {8} <i>HM</i> : Identifiant du modèle hydrologique<br>
+    {9} <i>Référence</i> : Période de référence (ref-YYYYMMDD-YYYYMMDD)<br><br>
+
+    <b>Les colonnes des fichiers parquet sont</b> : <ul>
+    <li><i>EXP</i> : Voir ci-dessus</li>
+    <li><i>GCM</i> : Voir ci-dessus</li>
+    <li><i>RCM</i> : Voir ci-dessus</li>
+    <li><i>BC</i> : Voir ci-dessus</li>
+    <li><i>HM</i> : Voir ci-dessus</li>
+    <li><i>code</i> : Code à 10 caractère du point de simulation fourni dans la <a href='https://doi.org/10.57745/UTKWR5'>description des points de simualtion</a></li>
+    <li><i>*Changement*</i> : Voir ci-dessus</li></ul>
+  dsDescriptionLanguage: French
+
+language: French
+
+subject: Earth and Environmental Sciences
+
+keyword:
+- keywordValue: hydrology
+  keywordTermURL: http://opendata.inrae.fr/thesaurusINRAE/c_11593
+  keywordVocabulary: INRAETHES
+  keywordVocabularyURI: http://opendata.inrae.fr/thesaurusINRAE/thesaurusINRAE
+- keywordValue: indicator
+  keywordTermURL: http://opendata.inrae.fr/thesaurusINRAE/c_16171
+  keywordVocabulary: INRAETHES
+  keywordVocabularyURI: http://opendata.inrae.fr/thesaurusINRAE/thesaurusINRAE
+- keywordValue: temporal aggregation
+  keywordTermURL: http://opendata.inrae.fr/thesaurusINRAE/c_1352
+  keywordVocabulary: INRAETHES
+  keywordVocabularyURI: http://opendata.inrae.fr/thesaurusINRAE/thesaurusINRAE
+- keywordValue: hydrological model
+  keywordTermURL: http://aims.fao.org/aos/agrovoc/c_13fb5a08
+  keywordVocabulary: AGROVOC
+  keywordVocabularyURI: http://aims.fao.org/aos/agrovoc/
+- keywordValue: hydrological projection
+- keywordValue: climate change impacts
+- keywordValue: niveau de réchauffement
+
+topicClassification:
+- topicClassValue: Hydrologie
+  topicClassVocab: INRAE Thésaurus
+  topicClassVocabURI: http://opendata.inrae.fr/thesaurusINRAE/c_1108
+
+kindOfData: Dataset
+
+kindOfDataOther: Changements par niveaux de réchauffement TRACC (débit)
+
+dataOrigin: simulation data
+
+software:
+- softwareName: J2000
+  softwareVersion: x
+
+series:
+- seriesName: RCP 8.5
+
+relatedDataset:
+- relatedDatasetCitation: Branger, Flora; Bonneau, Jérémie; Mimeau, Louise, 2025,
+    'Projections hydrologiques Explore2 du débit pour le modèle J2000 sous RCP 8.5'
+  relatedDatasetIDType: doi
+  relatedDatasetIDNumber: 10.57745/IPMCZP
+  relatedDatasetURL: https://doi.org/10.57745/IPMCZP
+- relatedDatasetCitation: Héraut, Louis, 2025, 'Indicateurs de séries annuelles issus
+    des projections hydrologiques Explore2 du débit pour le modèle J2000 sous RCP
+    8.5'
+  relatedDatasetIDType: doi
+  relatedDatasetIDNumber: 10.57745/RTHKI2
+  relatedDatasetURL: https://doi.org/10.57745/RTHKI2
+
+project:
+- projectAcronym: Explore2
+  projectTitle: 'Explore2 : Des futurs de l''eau'
+  projectURL: https://app.inrae.fr/expertise/dossier-le-projet-explore2-des-projections-hydrologiques-pour-adapter-la-gestion-de-la-ressource-en-eau/
+
+timePeriodCovered:
+- timePeriodCoveredStart: '1976-01-01'
+- timePeriodCoveredStart: '2030-01-01'
+- timePeriodCoveredStart: '2050-01-01'
+- timePeriodCoveredStart: '2100-01-01'
+- timePeriodCoveredEnd: '2005-08-31'
+
+depositor: HERAUT, LOUIS
+
+geographicCoverage:
+- country: France
+  otherGeographicCoverage: Loire
+- country: France
+  otherGeographicCoverage: Rhône
+

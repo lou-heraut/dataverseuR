@@ -1,0 +1,659 @@
+{
+  "metadataLanguage": "en",
+  "datasetVersion": {
+    "license": "etalab 2.0",
+    "metadataBlocks": {
+      "citation": {
+        "fields": [
+          {
+            "typeName": "title",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "Indicateurs de changements par horizons TRACC issus des projections hydrologiques Explore2 du débit pour le modèle J2000 sous RCP 8.5 (référence 1976-2005)"
+          },
+          {
+            "typeName": "alternativeURL",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "https://www.drias-eau.fr/commande"
+          },
+          {
+            "typeName": "datasetContact",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "datasetContactName": {
+                  "typeName": "datasetContactName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Héraut, Louis"
+                },
+                "datasetContactAffiliation": {
+                  "typeName": "datasetContactAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAE, UR RiverLy, Villeurbanne, France"
+                },
+                "datasetContactEmail": {
+                  "typeName": "datasetContactEmail",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "louis.heraut@inrae.fr"
+                }
+              },
+              {
+                "datasetContactName": {
+                  "typeName": "datasetContactName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Sauquet, Éric"
+                },
+                "datasetContactAffiliation": {
+                  "typeName": "datasetContactAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAE, UR RiverLy, Villeurbanne, France"
+                },
+                "datasetContactEmail": {
+                  "typeName": "datasetContactEmail",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "eric.sauquet@inrae.fr"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "author",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "authorName": {
+                  "typeName": "authorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Héraut, Louis"
+                },
+                "authorAffiliation": {
+                  "typeName": "authorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAE, UR RiverLy, Villeurbanne, France"
+                },
+                "authorIdentifierScheme": {
+                  "typeName": "authorIdentifierScheme",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "ORCID"
+                },
+                "authorIdentifier": {
+                  "typeName": "authorIdentifier",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "0009-0006-4372-0923"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "contributor",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "contributorType": {
+                  "typeName": "contributorType",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "Project Manager"
+                },
+                "contributorName": {
+                  "typeName": "contributorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Sauquet, Éric"
+                },
+                "contributorAffiliation": {
+                  "typeName": "contributorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAE, UR RiverLy, Villeurbanne, France"
+                },
+                "contributorIdentifierScheme": {
+                  "typeName": "contributorIdentifierScheme",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "ORCID"
+                },
+                "contributorIdentifier": {
+                  "typeName": "contributorIdentifier",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "0000-0001-9539-7730"
+                }
+              },
+              {
+                "contributorType": {
+                  "typeName": "contributorType",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "Researcher"
+                },
+                "contributorName": {
+                  "typeName": "contributorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Vidal, Jean-Philippe"
+                },
+                "contributorAffiliation": {
+                  "typeName": "contributorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAE, UR RiverLy, Villeurbanne, France"
+                },
+                "contributorIdentifierScheme": {
+                  "typeName": "contributorIdentifierScheme",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "ORCID"
+                },
+                "contributorIdentifier": {
+                  "typeName": "contributorIdentifier",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "0000-0002-3748-6150"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "producer",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "producerName": {
+                  "typeName": "producerName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Explore2"
+                },
+                "producerURL": {
+                  "typeName": "producerURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://professionnels.ofb.fr/fr/node/1244"
+                },
+                "producerLogoURL": {
+                  "typeName": "producerLogoURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://entrepot.recherche.data.gouv.fr/logos/202158/LogoExplore2.png"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "distributor",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "distributorName": {
+                  "typeName": "distributorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Entrepôt-Catalogue Recherche Data Gouv"
+                },
+                "distributorURL": {
+                  "typeName": "distributorURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://entrepot.recherche.data.gouv.fr"
+                },
+                "distributorLogoURL": {
+                  "typeName": "distributorLogoURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://s3.fr-par.scw.cloud/rdg-portal/logos-macarons/Macarons%20Recherche%20Data%20Gouv_Entrep%C3%B4t.png"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "dsDescription",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "dsDescriptionValue": {
+                  "typeName": "dsDescriptionValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Indicateurs de changements par horizons TRACC issus des débits journaliers simulés par le modèle hydrologique J2000 pour l'ensemble des projections climatiques Explore2 sous RCP 8.5. Ces fichiers résultent de l'agrégation temporelle des simulations hydrologiques sous runs historiques (avant 2005) et des projections hydrologiques (post 2005), fichiers NetCDF disponibles au téléchargement dans la collection <a href='https://entrepot.recherche.data.gouv.fr/dataverse/explore2-projections_hydrologiques'>Explore2 - Projections hydrologiques<\/a>.<br><br>\n\nCe dépôt regroupe un tableau 2D par indicateur et chaîne de simulation, c'est-à-dire, scénario d'émission RCP, couple GCM/RCM, correction de biais BC et modèle hydrologique HM. Ces données sont brutes et contiennent donc des chaînes de projections jugées aberrantes / horsains qu'il est possible de filter grâce à des <a href='https://doi.org/10.57745/YZNENQ'>métadonnées supplémentaires<\/a>. Pour des raisons techniques, ces indicateurs sont regroupés par dossiers compressés selon les différentes parties du régime hydrologique. Retrouvez davantage d'information sur la chaîne de modélisation du climat dans le rapport <a href='https://doi.org/10.57745/PUR7ML'>https://doi.org/10.57745/PUR7ML<\/a>.<br><br>\n\nLa description des modèles hydrologiques utilisés est disponible dans les annexes du rapport <a href='https://doi.org/10.57745/S6PQXD'>https://doi.org/10.57745/S6PQXD<\/a>. Retrouvez le diagnostic des modèles hydrologiques résumé à l'échelle des régions hydrologiques dans les fiches téléchargeables ici : <a href='https://doi.org/10.57745/DMFUXW'>https://doi.org/10.57745/DMFUXW<\/a>.<br><br>\n\n<b>Définition des 4 narratifs hydrologiques<\/b> :<br>\nL'ensemble des descriptions des narratifs hydrologique définit dans le cadre de la TRACC par niveau de réchauffement est défini ici : <a href='https://doi.org/10.57745/KAHIWJ'>https://doi.org/10.57745/KAHIWJ<\/a>.<br><br>\n\n<b>Métadonnées supplémentaires<\/b> : <ul>\n<li>Récapitulatif de l'ensemble des indicateurs hydrologiques : <a href='https://doi.org/10.57745/JVNHQL'>https://doi.org/10.57745/JVNHQL<\/a><\/li>\n<li>Récapitulatif de l'ensemble des chaînes de simulation : <a href='https://doi.org/10.57745/R6HG5X'>https://doi.org/10.57745/R6HG5X<\/a><\/li>\n<li>Description de l'ensemble des points de simulation : <a href='https://doi.org/10.57745/UTKWR5'>https://doi.org/10.57745/UTKWR5<\/a><\/li>\n<li>Liste des simulations des chaînes de projections jugées aberrantes / horsains : <a href='https://doi.org/10.57745/YZNENQ'>https://doi.org/10.57745/YZNENQ<\/a><\/li>\n<li>Récapitulatif des années pivots utilisées pour la TRACC : <a href='https://doi.org/10.57745/DCOQM6'>https://doi.org/10.57745/DCOQM6<\/a><\/li><\/ul>\n\n<b>Décomposition des chaînes de caractères formant le nom des fichiers parquet, séparées par des \"_\"<\/b> :<br>\n{1} <i>Indicateur<\/i> : Le nom de l’indicateur, du type de statistique observée<br>\n{2} <i>Échantillonnage<\/i> : Échantillonnage temporel sur laquelle est calculé l’indicateur<br>\n&#8594; {1}_{2} <i>Variable<\/i> : Variable résultante d'un indicateur temporellement contextualisé<br>\n{3} <i>RWL<\/i> : Horizon TRACC (RWL-(20|27|40))<br>\n&#8594; {1}_{2}_{3} <i>Changement<\/i> : Changement d'une variable pour un horizon TRACC par rapport à une période de référence, défini dans le <a href='https://doi.org/10.57745/JVNHQL'>récapitulatif des indicateurs hydrologiques<\/a><br>\n{4} <i>EXP<\/i> : Identifiant de l’expérience historique ou future via le scénario<br>\n{5} <i>GCM<\/i> : Identifiant du GCM forçeur<br>\n{6} <i>RCM<\/i> : Identifiant du RCM<br>\n{7} <i>BC<\/i> : Identifiant de la méthode de correction de biais statistique<br>\n{8} <i>HM<\/i> : Identifiant du modèle hydrologique<br>\n{9} <i>Référence<\/i> : Période de référence (ref-YYYYMMDD-YYYYMMDD)<br><br>\n\n<b>Les colonnes des fichiers parquet sont<\/b> : <ul>\n<li><i>EXP<\/i> : Voir ci-dessus<\/li>\n<li><i>GCM<\/i> : Voir ci-dessus<\/li>\n<li><i>RCM<\/i> : Voir ci-dessus<\/li>\n<li><i>BC<\/i> : Voir ci-dessus<\/li>\n<li><i>HM<\/i> : Voir ci-dessus<\/li>\n<li><i>code<\/i> : Code à 10 caractère du point de simulation fourni dans la <a href='https://doi.org/10.57745/UTKWR5'>description des points de simualtion<\/a><\/li>\n<li><i>*Changement*<\/i> : Voir ci-dessus<\/li><\/ul>"
+                },
+                "dsDescriptionLanguage": {
+                  "typeName": "dsDescriptionLanguage",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "French"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "language",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "French"
+            ]
+          },
+          {
+            "typeName": "subject",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "Earth and Environmental Sciences"
+            ]
+          },
+          {
+            "typeName": "keyword",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "hydrology"
+                },
+                "keywordTermURI": {
+                  "typeName": "keywordTermURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/c_11593"
+                },
+                "keywordVocabulary": {
+                  "typeName": "keywordVocabulary",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAETHES"
+                },
+                "keywordVocabularyURI": {
+                  "typeName": "keywordVocabularyURI",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/thesaurusINRAE"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "indicator"
+                },
+                "keywordTermURI": {
+                  "typeName": "keywordTermURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/c_16171"
+                },
+                "keywordVocabulary": {
+                  "typeName": "keywordVocabulary",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAETHES"
+                },
+                "keywordVocabularyURI": {
+                  "typeName": "keywordVocabularyURI",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/thesaurusINRAE"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "temporal aggregation"
+                },
+                "keywordTermURI": {
+                  "typeName": "keywordTermURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/c_1352"
+                },
+                "keywordVocabulary": {
+                  "typeName": "keywordVocabulary",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAETHES"
+                },
+                "keywordVocabularyURI": {
+                  "typeName": "keywordVocabularyURI",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/thesaurusINRAE"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "hydrological model"
+                },
+                "keywordTermURI": {
+                  "typeName": "keywordTermURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://aims.fao.org/aos/agrovoc/c_13fb5a08"
+                },
+                "keywordVocabulary": {
+                  "typeName": "keywordVocabulary",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "AGROVOC"
+                },
+                "keywordVocabularyURI": {
+                  "typeName": "keywordVocabularyURI",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://aims.fao.org/aos/agrovoc/"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "hydrological projection"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "climate change impacts"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "niveau de réchauffement"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "topicClassification",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "topicClassValue": {
+                  "typeName": "topicClassValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Hydrologie"
+                },
+                "topicClassVocab": {
+                  "typeName": "topicClassVocab",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "INRAE Thésaurus"
+                },
+                "topicClassVocabURI": {
+                  "typeName": "topicClassVocabURI",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "http://opendata.inrae.fr/thesaurusINRAE/c_1108"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "kindOfData",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "Dataset"
+            ]
+          },
+          {
+            "typeName": "kindOfDataOther",
+            "multiple": true,
+            "typeClass": "primitive",
+            "value": [
+              "Changements par niveaux de réchauffement TRACC (débit)"
+            ]
+          },
+          {
+            "typeName": "dataOrigin",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "simulation data"
+            ]
+          },
+          {
+            "typeName": "software",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "softwareName": {
+                  "typeName": "softwareName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "J2000"
+                },
+                "softwareVersion": {
+                  "typeName": "softwareVersion",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "x"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "series",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "seriesName": {
+                  "typeName": "seriesName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "RCP 8.5"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "relatedDataset",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "relatedDatasetCitation": {
+                  "typeName": "relatedDatasetCitation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Branger, Flora; Bonneau, Jérémie; Mimeau, Louise, 2025, 'Projections hydrologiques Explore2 du débit pour le modèle J2000 sous RCP 8.5'"
+                },
+                "relatedDatasetIDType": {
+                  "typeName": "relatedDatasetIDType",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "doi"
+                },
+                "relatedDatasetIDNumber": {
+                  "typeName": "relatedDatasetIDNumber",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "10.57745/IPMCZP"
+                },
+                "relatedDatasetURL": {
+                  "typeName": "relatedDatasetURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://doi.org/10.57745/IPMCZP"
+                }
+              },
+              {
+                "relatedDatasetCitation": {
+                  "typeName": "relatedDatasetCitation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Héraut, Louis, 2025, 'Indicateurs de séries annuelles issus des projections hydrologiques Explore2 du débit pour le modèle J2000 sous RCP 8.5'"
+                },
+                "relatedDatasetIDType": {
+                  "typeName": "relatedDatasetIDType",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "doi"
+                },
+                "relatedDatasetIDNumber": {
+                  "typeName": "relatedDatasetIDNumber",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "10.57745/RTHKI2"
+                },
+                "relatedDatasetURL": {
+                  "typeName": "relatedDatasetURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://doi.org/10.57745/RTHKI2"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "project",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "projectAcronym": {
+                  "typeName": "projectAcronym",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Explore2"
+                },
+                "projectTitle": {
+                  "typeName": "projectTitle",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Explore2 : Des futurs de l'eau"
+                },
+                "projectURL": {
+                  "typeName": "projectURL",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "https://app.inrae.fr/expertise/dossier-le-projet-explore2-des-projections-hydrologiques-pour-adapter-la-gestion-de-la-ressource-en-eau/"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "timePeriodCovered",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "timePeriodCoveredStart": {
+                  "typeName": "timePeriodCoveredStart",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "1976-01-01"
+                }
+              },
+              {
+                "timePeriodCoveredStart": {
+                  "typeName": "timePeriodCoveredStart",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "2030-01-01"
+                }
+              },
+              {
+                "timePeriodCoveredStart": {
+                  "typeName": "timePeriodCoveredStart",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "2050-01-01"
+                }
+              },
+              {
+                "timePeriodCoveredStart": {
+                  "typeName": "timePeriodCoveredStart",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "2100-01-01"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "depositor",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "HERAUT, LOUIS"
+          }
+        ]
+      },
+      "geospatial": {
+        "displayName": "Geospatial Metadata",
+        "fields": [
+          {
+            "typeName": "geographicCoverage",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "country": {
+                  "typeName": "country",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "France"
+                },
+                "otherGeographicCoverage": {
+                  "typeName": "otherGeographicCoverage",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Loire"
+                }
+              },
+              {
+                "country": {
+                  "typeName": "country",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "France"
+                },
+                "otherGeographicCoverage": {
+                  "typeName": "otherGeographicCoverage",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Rhône"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

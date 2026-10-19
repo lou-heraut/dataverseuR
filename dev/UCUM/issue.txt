@@ -1,0 +1,34 @@
+
+Proposal: Add ASCII-friendly / column-safe unit aliases for common UCUM units
+
+#### Context
+UCUM units often include characters that are unsafe for column names in common scientific workflows (e.g., `/`, `*`, `(`, `( )`). In practice, researchers often append units directly to column names in CSVs, R, or Python data frames, instead of storing them separately in a metadata file — even though metadata storage is the best FAIR practice.
+
+To bridge this gap, I propose creating **ASCII-friendly, column-safe aliases** that map directly to canonical UCUM units. This approach would allow:
+
+* Units to be safely included in column names
+* Automated documentation of column units (e.g., auto-generated README files)
+* Preservation of FAIR principles through explicit mapping to UCUM
+
+
+#### Proposed Approach
+
+- Replace `/` with `_per_` in aliases
+- Encode powers of ten using common engineering notation: `1k`, `1M`, `1G`, etc.
+- Remove or replace all characters unsafe in programming identifiers (spaces, `*`, `(`, `[`, `]`, etc.)
+- Preserve semantic meaning, including reference values (e.g., `1.73 m²` → `1p73_m2`)
+
+This would create a consistent, machine-safe way to include units in column names while maintaining a clear link to the canonical UCUM definitions.
+
+I have modified the [UCUM Table of Example Codes](https://github.com/ucum-org/ucum/blob/main/common-units/TableOfExampleUcumCodesForElectronicMessaging.xlsx) to show what it could look like.
+
+
+#### Request
+
+Would it be possible to formalize this approach as a new set of UCUM rules or an official “column-safe alias convention”? This would help:
+
+- Ensure consistency across datasets and programming languages
+- Make UCUM units more immediately usable in automated workflows
+- Improve interoperability without losing semantic fidelity
+
+Thank you for your work on UCUM, and I hope this proposal does not duplicate an existing issue. I would appreciate feedback on whether this could be integrated as an official alias scheme, or if it would be better maintained as a separate community guideline.
