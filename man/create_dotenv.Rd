@@ -5,15 +5,15 @@
 \title{create_dotenv}
 \usage{
 create_dotenv(
-  dotenv_path = file.path(getwd(), "dist.env"),
+  dotenv_path = file.path(getwd(), ".env"),
   overwrite = FALSE,
   verbose = TRUE
 )
 }
 \arguments{
-\item{dotenv_path}{A character string for the path of the .env file that will be created. By default, it create a file named \code{dist.env} in the working directory. This file should be rename \code{.env}.}
+\item{dotenv_path}{A character string for the path of the .env file that will be created. By default, it creates a file named \code{.env} in the working directory.}
 
-\item{overwrite}{A logical value indicating whether to overwrite an existing .env file. Defaults to FALSE.}
+\item{overwrite}{A logical value indicating whether to overwrite an existing .env file. Defaults to FALSE, in which case an existing file is left untouched.}
 
 \item{verbose}{If \code{FALSE}, no processing informations are displayed. Defaults to \code{TRUE}.}
 }
@@ -21,7 +21,7 @@ create_dotenv(
 The function returns the path to the created .env file.
 }
 \description{
-Create a default .env file necessary to fill in environment variables required for dataverse authentication.
+Create a .env file to fill in with the environment variables required for dataverse authentication (\code{API_TOKEN} and \code{BASE_URL}). This file holds your credentials: never share it, and add it to your \code{.gitignore} if you are in a Git project.
 }
 \examples{
 \dontrun{

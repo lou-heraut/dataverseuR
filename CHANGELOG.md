@@ -26,11 +26,14 @@ version [SemVer](https://semver.org/lang/fr/).
 - Licence GPL (>= 3) partout : le fichier `LICENSE` contenait le texte de
   l'AGPL, remplacé par celui de la GPL dans `LICENSE.md`.
 - Le dépôt GitHub s'appelle désormais `lou-heraut/dataverseuR`.
+- `create_dotenv()` crée directement le fichier `.env` à remplir, au lieu d'un
+  `dist.env` à renommer, et laisse intact un `.env` existant (sauf
+  `overwrite=TRUE`). Son modèle dans le paquet s'appelle `env.example`.
 
 ### Corrigé
 
-- `create_dotenv()` : le modèle `dist.env` manquait au paquet installé, exclu
-  par un motif trop large de `.Rbuildignore`.
+- `create_dotenv()` : son modèle manquait au paquet installé, exclu par un
+  motif trop large de `.Rbuildignore`.
 - `delete_all_datasets_files()` appelait des fonctions qui avaient été
   renommées.
 - La documentation de quatre fonctions exportées manquait au paquet.

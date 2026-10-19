@@ -20,9 +20,9 @@
 
 
 #' @title create_dotenv
-#' @description Create a default .env file necessary to fill in environment variables required for dataverse authentication.
-#' @param dotenv_path A character string for the path of the .env file that will be created. By default, it create a file named `dist.env` in the working directory. This file should be rename `.env`.
-#' @param overwrite A logical value indicating whether to overwrite an existing .env file. Defaults to FALSE.
+#' @description Create a .env file to fill in with the environment variables required for dataverse authentication (`API_TOKEN` and `BASE_URL`). This file holds your credentials: never share it, and add it to your `.gitignore` if you are in a Git project.
+#' @param dotenv_path A character string for the path of the .env file that will be created. By default, it creates a file named `.env` in the working directory.
+#' @param overwrite A logical value indicating whether to overwrite an existing .env file. Defaults to FALSE, in which case an existing file is left untouched.
 #' @param verbose If `FALSE`, no processing informations are displayed. Defaults to `TRUE`.
 #' @return The function returns the path to the created .env file.
 #' @seealso
@@ -41,19 +41,24 @@
 #' }
 #' @md
 #' @export
-create_dotenv = function(dotenv_path=file.path(getwd(), "dist.env"),
+create_dotenv = function(dotenv_path=file.path(getwd(), ".env"),
                          overwrite=FALSE,
                          verbose=TRUE) {
-    
-    dotenv_from_path = system.file("templates", "dist.env",
-                                   package="dataverseuR")
-    file.copy(dotenv_from_path, dotenv_path, overwrite=overwrite)
 
-    if (verbose) {
-        message(paste0("The '", basename(dotenv_path),
-                       "' file has been copied to : '",
-                       dotenv_path,
-                       "'\n\nPLease fill in your credential and rename that file '.env'.\n/!\\ NEVER give your personnal credential through a GIT repo."))
+    if (file.exists(dotenv_path) & !overwrite) {
+        message(paste0("Environment file already exists in ",
+                       dotenv_path))
+    } else {
+        dotenv_from_path = system.file("templates", "env.example",
+                                       package="dataverseuR")
+        file.copy(dotenv_from_path, dotenv_path, overwrite=overwrite)
+
+        if (verbose) {
+            message(paste0("The '", basename(dotenv_path),
+                           "' file has been created in : '",
+                           dotenv_path,
+                           "'\n\nPlease fill in your credentials.\n/!\\ NEVER share this file, for example through a Git repository: add it to your .gitignore."))
+        }
     }
     return (dotenv_path)
 }

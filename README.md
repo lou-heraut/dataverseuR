@@ -32,8 +32,8 @@ dataverseuR has a built-in function for this step. Simply run:
 ``` R
 create_dotenv()
 ```
-A `dist.env` file will be created in your working directory. The next step is to fill in your credentials.  
-To do this, go to your Dataverse instance and create a token. For example, for the demo Recherche Data Gouv instance with `BASE_URL`: [https://demo.recherche.data.gouv.fr](https://demo.recherche.data.gouv.fr), click on your account name, find the [API token tab](https://demo.recherche.data.gouv.fr/dataverseuser.xhtml?selectTab=apiTokenTab), and copy your token to the `API_TOKEN` variable in the `dist.env` file, like this:
+A `.env` file will be created in your working directory (an existing one is left untouched). The next step is to fill in your credentials.  
+To do this, go to your Dataverse instance and create a token. For example, for the demo Recherche Data Gouv instance with `BASE_URL`: [https://demo.recherche.data.gouv.fr](https://demo.recherche.data.gouv.fr), click on your account name, find the [API token tab](https://demo.recherche.data.gouv.fr/dataverseuser.xhtml?selectTab=apiTokenTab), and copy your token to the `API_TOKEN` variable in the `.env` file, like this:
 ``` bash
 # .env
 
@@ -41,7 +41,7 @@ API_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 BASE_URL=https://demo.recherche.data.gouv.fr
 
 ```
-Then, rename the file to `.env`, and if you are in a Git project, add `.env` to your `.gitignore` file.  
+If you are in a Git project, add `.env` to your `.gitignore` file.  
 
 Now you should be able to use the API without issues by running this line in your working directory:
 ``` R
