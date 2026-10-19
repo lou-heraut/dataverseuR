@@ -41,10 +41,10 @@ to_do = c(
 
 
 if ("move_dataset" %in% to_do) {
-    dataset_DOI = "doi:10.57745/FGAOCD"
+    dataset_DOI = "doi:10.57745/XFO4GY"
     dataset_ID = convert_DOI_to_ID(dataset_DOI)
     move_datasets(dataset_DOI,
-                  target_dataverse="explore2-rapports_techniques")
+                  target_dataverse="riverly")
 }
 
 
@@ -66,16 +66,17 @@ if ("get_metadata" %in% to_do) {
 if ("search_datasets" %in% to_do) {
 
     
-    query = "message"
+    query = 'authorName:"Vidal, Jean-Philippe"'
     publication_status = "RELEASED"
     type = "dataset"
+    dataverse = ""
     n_search = 1000
     
     datasets =
         search_datasets(query=query,
                         publication_status=publication_status,
                         type=type,
-                        dataverse="explore2",
+                        dataverse=dataverse,
                         n_search=n_search)
     datasets = dplyr::distinct(datasets, dataset_DOI,
                                .keep_all=TRUE)
@@ -166,17 +167,16 @@ if ("get_metrics" %in% to_do) {
 
 if ("generate_README" %in% to_do) {
     
-    dataset_DOI =c("doi:10.57745/DP0DQH")
-    dirpath = file.path("dev", "dataverse_data_katarina")
+    dataset_DOI =c("doi:10.57745/VOYD57")
+    dirpath = file.path("dev", "dataverse_data_etienne")
 
 
 devtools::load_all("/home/lheraut/Documents/INRAE/projects/ASHE_project/ASHE")
-
     stop()
 
     download_datasets_files(dataset_DOI, dirpath)
-    clean_datasets_files(dataset_DOI, dirpath)
+    clean_datasets_files(dataset_DOI, dirpath, overwrite=TRUE)
     create_datasets_README(dataset_DOI, dirpath,
-                           file_pattern=NULL,
+                           file_pattern="*.csv",
                            overwrite=TRUE)
 }
