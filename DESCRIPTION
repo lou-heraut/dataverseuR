@@ -11,9 +11,10 @@ Authors@R: c(
 	   )
 Maintainer: Louis Héraut <louis.heraut@inrae.fr>
 Encoding: UTF-8
-License: GPL-3 + file LICENSE
+License: GPL (>= 3)
 Imports: 
     dplyr,
+    fs,
     tidyr,
     tibble,
     dotenv,
@@ -23,8 +24,9 @@ Imports:
     jsonlite,
     yaml,
     xml2,
-    ASHE
-Depends: ASHE
+    ASHE,
+    tools,
+    utils
 Remotes:
     lou-heraut/ASHE
 RoxygenNote: 7.3.2

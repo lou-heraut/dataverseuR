@@ -12,7 +12,7 @@
 # dataverseuR R package is distributed in the hope that it will be
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU xGeneral Public License for more details.
+# See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with dataverseuR R package.
@@ -399,7 +399,7 @@ get_datasets_citation = function(dataset_DOI,
         
         if (is.na(citation_value)) {
             warning(paste0(
-                dDOI, " - citation non trouvée pour les versions latest et draft : ",
+                dDOI, " - citation not found for the latest and draft versions: ",
                 httr::status_code(response), " ",
                 httr::content(response, "text")
             ))

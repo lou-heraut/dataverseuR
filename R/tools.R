@@ -12,7 +12,7 @@
 # dataverseuR R package is distributed in the hope that it will be
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU xGeneral Public License for more details.
+# See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with dataverseuR R package.
@@ -38,6 +38,13 @@ check_dir = function (path) {
         dir.create(dirname(path), recursive=TRUE)
     }
 }
+
+
+# Column names used unquoted in dplyr and tidyr calls, declared here so that
+# R CMD check does not take them for undefined global variables.
+utils::globalVariables(c("categories", "dataFile", "description",
+                         "global_id", "group", "group_index",
+                         "persistentId", "typeName", "value"))
 
 
 # Fonction pour sanitizer les DOI en noms de dossiers

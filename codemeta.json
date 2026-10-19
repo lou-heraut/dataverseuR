@@ -30,10 +30,10 @@
     "dateModified": "2025-10-08",
     "datePublished": "2025-10-08",
     "description": "An R Dataverse API wrapper to improve the submission process using a simpler YAML metadata file..\n\nA dataverse API R wrapper to enhance the deposit procedure using simplier YAML metadata file.",
-    "license": "https://spdx.org/licenses/AGPL-3.0-or-later",
+    "license": "https://spdx.org/licenses/GPL-3.0-or-later",
     "name": "dataverseuR",
     "operatingSystem": "Debian 12.x",
     "programmingLanguage": "R 4.x.x",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "developmentStatus": "active"
 }

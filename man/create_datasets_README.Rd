@@ -64,7 +64,7 @@ create_datasets_README(dataset_DOI, overwrite=TRUE)
 \itemize{
 \item \code{\link[=clean_datasets_files]{clean_datasets_files()}} for cleaning dataset files before creating README
 \item \code{\link[=download_datasets_files]{download_datasets_files()}} for downloading dataset files
-\item \code{\link[=get_datasets_metadata_call]{get_datasets_metadata_call()}} for retrieving dataset metadata
+\item \code{\link[=get_datasets_metadata]{get_datasets_metadata()}} for retrieving dataset metadata
 \item \code{\link[=get_datasets_citation]{get_datasets_citation()}} for retrieving dataset citations
 \item \href{https://github.com/lou-heraut/dataverseuR}{dataverseuR GitHub documentation} \url{https://github.com/lou-heraut/dataverseuR}
 }

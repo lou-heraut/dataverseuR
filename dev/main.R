@@ -12,7 +12,7 @@
 # dataverseur R package is distributed in the hope that it will be
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU xGeneral Public License for more details.
+# See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with dataverseur R package.

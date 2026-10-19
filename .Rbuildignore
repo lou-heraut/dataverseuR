@@ -1,3 +1,10 @@
 ^\.github$
-\.env*
+^\.env
+^\.Rhistory$
 ^dev$
+^Makefile$
+^codemeta\.json$
+^CODE_OF_CONDUCT\.md$
+^LICENSE\.md$
+^ROADMAP\.md$
+^CHANGELOG\.md$

@@ -12,7 +12,7 @@
 # dataverseuR R package is distributed in the hope that it will be
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU xGeneral Public License for more details.
+# See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with dataverseuR R package.
@@ -547,7 +547,7 @@ convert_metadata_to_yml = function (metadata_json_path,
                 item_list = 
                     dplyr::summarise(dplyr::group_by(item,
                                                      group_index),
-                                     value=list(tibble::deframe(pick(typeName,
+                                     value=list(tibble::deframe(dplyr::pick(typeName,
                                                                      value))),
                                      .groups="drop")
                 item_list = lapply(item_list$value, as.list)

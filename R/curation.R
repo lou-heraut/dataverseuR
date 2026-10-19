@@ -283,7 +283,7 @@ clean_datasets_files = function(dataset_DOI,
 #' @seealso
 #' - [clean_datasets_files()] for cleaning dataset files before creating README
 #' - [download_datasets_files()] for downloading dataset files
-#' - [get_datasets_metadata_call()] for retrieving dataset metadata
+#' - [get_datasets_metadata()] for retrieving dataset metadata
 #' - [get_datasets_citation()] for retrieving dataset citations
 #' - [dataverseuR GitHub documentation](https://github.com/lou-heraut/dataverseuR) <https://github.com/lou-heraut/dataverseuR>
 #' @md
@@ -342,11 +342,11 @@ create_datasets_README = function(dataset_DOI,
         
         # Extraire les informations du dataset
         RDG_TITLE = metadata_json_fields[typeName == "title"][[1]]$value
-        RDG_DOI = dataverseuR::convert_DOI_to_URL(dDOI)
+        RDG_DOI = convert_DOI_to_URL(dDOI)
         RDG_CITATION = get_datasets_citation(dDOI, 
                                              BASE_URL=BASE_URL,
                                              API_TOKEN=API_TOKEN,
-                                             replace_draft=TRUE,
+                                             replace_draft_version=TRUE,
                                              verbose=FALSE)$citation
         RDG_CONTACT_EMAIL = sapply(
             metadata_json_fields[typeName == "datasetContact"][[1]]$value,
@@ -380,7 +380,7 @@ create_datasets_README = function(dataset_DOI,
         README = gsub("[{]PUBLICATION[}]", publication, README)
         
         # Créer l'arborescence
-        tree = capture.output(fs::dir_tree(RDG_datadir))
+        tree = utils::capture.output(fs::dir_tree(RDG_datadir))
         tree[1] = "."
         tree = c(tree, get_info_dir(RDG_datadir))
         tree = paste0(tree, collapse="\n")
@@ -412,7 +412,7 @@ create_datasets_README = function(dataset_DOI,
                                      RDG_FILE_DESCRIPTION,
                                      0, nchar_line)
 
-            if (!is.null(file_pattern) && grepl(glob2rx(file_pattern), path)) {
+            if (!is.null(file_pattern) && grepl(utils::glob2rx(file_pattern), path)) {
                 data = ASHE::read_tibble(path)
                 column_info_list = paste0(
                     "- displayed_name: ", names(data), "\n",
