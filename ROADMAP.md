@@ -1,36 +1,34 @@
 # Feuille de route
 
 Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
-(`dev/audits/2026-10-19_project-structure.md`), les choix déjà faits sont dans
-`dev/decisions.md`.
+(`dev/audits/2026-10-19_project-structure.md`), les repères du projet sont dans
+`dev/decisions.md`, ce qui est fait dans `CHANGELOG.md`.
 
 ## Prochaines étapes
 
-1. **Fermer les fuites du build.** Ajouter à `.Rbuildignore` les fichiers du
-   projet qui ne sont pas du paquet : `Makefile`, `codemeta.json`,
-   `CODE_OF_CONDUCT.md`, `ROADMAP.md`, puis `CLAUDE.md`, `CHANGELOG.md` et
-   `CITATION.cff` quand ils existeront.
-2. **Remettre le check au vert.** Passer le message de `R/api.R:402` en anglais
-   ASCII, déclarer `fs` et `utils`, sortir `ASHE` de `Depends`, régler les
-   variables globales et l'argument `replace_draft`, remplacer le texte de
-   `LICENSE` par la GPL-3 et corriger `codemeta.json`. Cible : zéro
-   avertissement en local, puis sur GitHub.
-3. **Poser les fichiers du projet.** Un `CLAUDE.md` court, `CHANGELOG.md`,
-   `CITATION.cff` ; la version vit dans `DESCRIPTION`, `codemeta.json` la
-   reprend. Une fois le check vert, publier 0.2.0 avec le tag `v0.2.0`.
-4. **Premiers tests.** `sanitize_doi()`, `format_yml()`, l'aller-retour des
-   métadonnées sur les jeux d'essai de `tests/testthat/fixtures/`.
-5. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
+1. **Poser les fichiers du projet.** Un `CLAUDE.md` court et `CITATION.cff`,
+   exclus du paquet par `.Rbuildignore` ; la version vit dans `DESCRIPTION`,
+   `codemeta.json` la reprend. Puis publier 0.2.0 avec le tag `v0.2.0`, en
+   mettant à jour le champ `Date`.
+2. **Premiers tests.** `sanitize_doi()`, `format_yml()`, l'aller-retour des
+   métadonnées sur les jeux d'essai de `tests/testthat/fixtures/` (le code
+   actuel les reproduit à l'identique, vérifié le 2026-10-19).
+3. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
    Aujourd'hui, 4 blocs sur 10 appellent des fonctions disparues, 2 autres des
    variables qu'aucun bloc ne définit, et il reste un chemin absolu vers ASHE
    et des `stop()` de travail.
-6. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
+4. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
    téléchargement, de nettoyage et de README déduisent leurs dossiers du DOI
    (`{doi}/`, `{doi}_cleaned/`), et le champ `Path:` du README écrit le chemin
    local. Trouver quelque chose de plus simple et plus propre.
-7. **Petits défauts.** « directoryies » dans `get_info_dir()`, l'argument
-   inutilisé `dataverse` de `modify_datasets()`, la valeur de retour de
-   `get_datasets_metadata()` qui ne correspond pas à sa documentation.
+5. **Petits défauts.**
+   - « directoryies » dans `get_info_dir()`.
+   - L'argument inutilisé `dataverse` de `modify_datasets()`.
+   - La valeur de retour de `get_datasets_metadata()`, qui ne correspond pas à
+     sa documentation.
+   - `dotenv` est déclaré dans `Imports` sans que le paquet l'appelle (la
+     seule note du check) ; le README demande aux utilisateurs de s'en servir.
+   - Le champ `Title` répète le nom du paquet (contrôle CRAN).
 
 ## Questions ouvertes
 
@@ -40,13 +38,19 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
   (`ASHE/R/read_write.R`) : les valeurs peuvent changer en route (zéros de tête
   d'un code, écriture des décimales, dates ambiguës). À voir avec un audit
   d'ASHE.
+- **Aligner les données sur des vocabulaires contrôlés pendant la curation**
+  (unités QUDT ou UCUM, par exemple). Horizon lointain, et peut-être pas dans
+  dataverseuR : le sujet dépasse le paquet. Les premiers essais sont dans le
+  dossier parent du dépôt (`QUDT/`, `UCUM/`). En suspens.
 
 ## Plus tard
 
 - Passer de `httr` (superseded) à `httr2`.
 - Des tests d'API avec `vcr`, sans jeton dans les enregistrements.
-- Mettre à jour les liens vers le guide Dataverse (5.3 aujourd'hui, 6.x
-  courant) et le README (exemple de `create_datasets()` obsolète, fonctions
+- Mettre à jour la documentation : les liens vers le guide Dataverse (5.3
+  aujourd'hui, 6.x courant), le lien mort vers
+  `dataverseuR_toolbox/Explore2/post_hydrological_projection.R` (neuf fichiers
+  `man/`), et le README (exemple de `create_datasets()` obsolète, fonctions
   récentes absentes, badge « stable »).
 - Remplacer un fichier d'un brouillon par le point d'accès de remplacement de
   l'API.
