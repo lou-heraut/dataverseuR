@@ -50,4 +50,3 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
   récentes absentes, badge « stable »).
 - Remplacer un fichier d'un brouillon par le point d'accès de remplacement de
   l'API.
-- Les unités QUDT/UCUM dans le README généré.
