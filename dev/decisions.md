@@ -1,25 +1,29 @@
 # Décisions
 
-Les choix qui ont émergé du travail, avec leur date et leur raison.
+Les repères qui cadrent le projet, avec leur raison. Ils évoluent avec le
+travail ; git garde l'historique.
 
-## 2026-10-19
+## 2026-10-19, après l'audit de structure
 
-Issus de l'audit `dev/audits/2026-10-19_project-structure.md`.
-
-- **La curation vit hors du dépôt.** Les anciens dossiers de curation de
-  `dev/` sont archivés dans un dossier de curation local, comme trace du
-  travail passé. Ce dépôt est public, et ces dossiers contenaient des
-  brouillons et des données de déposants.
-- **Aucune donnée de jeu dans le dépôt**, ni de curation ni d'essai.
-- **Le skill de curation reste assez indépendant du paquet** : il s'en sert
-  quand c'est utile (API, génération du README, scripts R réutilisables), et
-  peut curer sans lui.
-- **Les README générés restent génériques.**
-- **Licence GPL-3.**
-- **Journal des versions : `CHANGELOG.md`**, au format Keep a Changelog.
-- **`test.R` est le script de pilotage du paquet**, pas des tests. Il devient
-  `dev/main.R` et garde sa forme (un vecteur `to_do`, un bloc par action),
-  une manière humaine de manier le paquet qui vaut d'être gardée.
-- **La conversion des tableaux vers un CSV propre pour Dataverse** est l'une
-  des étapes les plus récurrentes de la curation : elle doit retrouver un
-  équivalent propre à un moment.
+- La curation se fait hors de ce dépôt. Les anciens dossiers `dev/dataverse_*`
+  sont archivés dans le dossier de curation local, comme trace du travail
+  passé. Le dépôt est public, et ces dossiers mêlaient brouillons, données de
+  déposants et plusieurs gigaoctets de fichiers.
+- Pas de données de jeux dans le dépôt, ni de curation ni d'essai. Les jeux
+  d'essai des tests sont des fichiers de métadonnées.
+- dataverseuR est un outil dont le skill de curation peut se servir, pas une
+  dépendance : le skill sait curer sans lui. Le paquet n'a donc pas à épouser
+  l'organisation du skill ; ce qui compte, c'est que ses fonctions s'utilisent
+  simplement depuis des scripts (API, README, scripts de suivi qu'on peut
+  donner aux déposants).
+- Les README générés sont génériques : rien de la machine qui les produit.
+- GPL-3, comme ASHE. L'AGPL n'apporte rien à un paquet R utilisé en local.
+- `CHANGELOG.md` au format Keep a Changelog, comme les autres projets.
+- `dev/main.R` est le script de pilotage du paquet : un vecteur `to_do`, un
+  bloc par action. C'est une manière humaine de s'en servir et une trace de
+  l'usage réel ; sa forme se garde, et peut servir de modèle aux scripts
+  d'usage écrits pour d'autres.
+- Convertir des tableaux mal formés en CSV propre pour Dataverse est l'une des
+  étapes les plus fréquentes de la curation, et mérite un outil propre.
+  L'actuel, `ASHE::convert_tibble()`, peut changer des valeurs en les relisant :
+  à garder en tête tant qu'il n'est pas repris.
