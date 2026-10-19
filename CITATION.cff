@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+type: software
+title: "dataverseuR"
+abstract: "A Dataverse API R wrapper to enhance the deposit procedure using simpler YAML metadata files."
+authors:
+  - family-names: "Héraut"
+    given-names: "Louis"
+    email: "louis.heraut@inrae.fr"
+    affiliation: "INRAE, UR RiverLy, Villeurbanne, France"
+    orcid: "https://orcid.org/0009-0006-4372-0923"
+version: "0.2.0"
+date-released: "2026-10-19"
+license: GPL-3.0-or-later
+repository-code: "https://github.com/lou-heraut/dataverseuR"
+keywords:
+  - Dataverse
+  - Recherche Data Gouv
+  - metadata
+  - YAML
+  - R

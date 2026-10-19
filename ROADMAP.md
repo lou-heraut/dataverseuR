@@ -6,22 +6,18 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
 
 ## Prochaines étapes
 
-1. **Poser les fichiers du projet.** Un `CLAUDE.md` court et `CITATION.cff`,
-   exclus du paquet par `.Rbuildignore` ; la version vit dans `DESCRIPTION`,
-   `codemeta.json` la reprend. Puis publier 0.2.0 avec le tag `v0.2.0`, en
-   mettant à jour le champ `Date`.
-2. **Premiers tests.** `sanitize_doi()`, `format_yml()`, l'aller-retour des
+1. **Premiers tests.** `sanitize_doi()`, `format_yml()`, l'aller-retour des
    métadonnées sur les jeux d'essai de `tests/testthat/fixtures/` (le code
    actuel les reproduit à l'identique, vérifié le 2026-10-19).
-3. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
+2. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
    Aujourd'hui, 4 blocs sur 10 appellent des fonctions disparues, 2 autres des
    variables qu'aucun bloc ne définit, et il reste un chemin absolu vers ASHE
    et des `stop()` de travail.
-4. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
+3. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
    téléchargement, de nettoyage et de README déduisent leurs dossiers du DOI
    (`{doi}/`, `{doi}_cleaned/`), et le champ `Path:` du README écrit le chemin
    local. Trouver quelque chose de plus simple et plus propre.
-5. **Petits défauts.**
+4. **Petits défauts.**
    - « directoryies » dans `get_info_dir()`.
    - L'argument inutilisé `dataverse` de `modify_datasets()`.
    - La valeur de retour de `get_datasets_metadata()`, qui ne correspond pas à

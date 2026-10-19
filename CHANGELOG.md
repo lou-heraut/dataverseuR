@@ -5,6 +5,8 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+## [0.2.0] - 2026-10-19
+
 ### Ajouté
 
 - `get_datasets_citation()` : la citation formatée d'un ou plusieurs jeux.
@@ -15,6 +17,7 @@ version [SemVer](https://semver.org/lang/fr/).
   et le modèle RDG x RiverLy (`inst/templates/README_template_en.txt`).
 - `clean_datasets_files()` : convertit en CSV les fichiers tabulaires d'un jeu
   téléchargé, avec `ASHE::convert_tibble()`.
+- `CITATION.cff`, pour citer le paquet.
 
 ### Modifié
 
