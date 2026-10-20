@@ -20,8 +20,6 @@ modèle. Les repères du projet sont dans `dev/decisions.md`.
 
 - L'intégration continue (`R CMD check --as-cran`) échoue au moindre
   avertissement : un check en local avant de pousser.
-- `generate_metadata_json()` et `convert_metadata_to_yml()` redonnent à
-  l'identique les jeux d'essai de `tests/testthat/fixtures/`.
 - Le modèle `inst/templates/README_template_en.txt` sert aussi hors de ce
   dépôt : ses champs entre accolades sont une interface.
 - `.Rbuildignore` : des motifs ancrés (`^…$`), un motif libre a déjà retiré un
