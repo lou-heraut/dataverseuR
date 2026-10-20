@@ -5,6 +5,8 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+## [0.3.0] - 2026-10-20
+
 ### Corrigé
 
 - `generate_metadata_json()` et `convert_metadata_to_yml()` sont réécrites et

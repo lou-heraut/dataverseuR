@@ -27,13 +27,13 @@
     ],
     "codeRepository": "https://github.com/lou-heraut/dataverseuR",
     "dateCreated": "2025-10-08",
-    "dateModified": "2026-10-19",
+    "dateModified": "2026-10-20",
     "datePublished": "2025-10-08",
     "description": "An R Dataverse API wrapper to improve the submission process using a simpler YAML metadata file..\n\nA dataverse API R wrapper to enhance the deposit procedure using simplier YAML metadata file.",
     "license": "https://spdx.org/licenses/GPL-3.0-or-later",
     "name": "dataverseuR",
     "operatingSystem": "Debian 12.x",
     "programmingLanguage": "R 4.x.x",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "developmentStatus": "active"
 }
