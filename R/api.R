@@ -607,6 +607,32 @@ move_datasets = function(dataset_DOI,
 }
 
 
+# Waits while a dataset is locked, for instance by the ingest of a table just
+# added: until then, Dataverse refuses any new file or publication.
+wait_dataset_unlocked = function(dataset_DOI,
+                                 BASE_URL=Sys.getenv("BASE_URL"),
+                                 API_TOKEN=Sys.getenv("API_TOKEN"),
+                                 timeout=600,
+                                 wait_time=1) {
+    locks_url = paste0(BASE_URL, "/api/datasets/:persistentId/locks?persistentId=",
+                       dataset_DOI)
+    start_time = Sys.time()
+    repeat {
+        response = httr::GET(locks_url,
+                             httr::add_headers("X-Dataverse-key"=API_TOKEN))
+        if (httr::status_code(response) != 200 ||
+            length(httr::content(response, "parsed")$data) == 0) {
+            return (invisible(NULL))
+        }
+        if (difftime(Sys.time(), start_time, units="secs") > timeout) {
+            stop(paste0("Dataset ", dataset_DOI, " still locked after ",
+                        timeout, " seconds."))
+        }
+        Sys.sleep(wait_time)
+    }
+}
+
+
 get_datasets_metadata_call = function(dataset_DOI,
                                       BASE_URL=Sys.getenv("BASE_URL"),
                                       API_TOKEN=Sys.getenv("API_TOKEN")) {
@@ -832,6 +858,8 @@ add_datasets_files = function(dataset_DOI, file_paths,
                 restrict = "false",
                 tabIngest = "true"
             )
+            wait_dataset_unlocked(dDOI, BASE_URL=BASE_URL,
+                                  API_TOKEN=API_TOKEN, timeout=timeout)
             start_time = Sys.time()
             response =
                 httr::POST(url,
@@ -856,12 +884,13 @@ add_datasets_files = function(dataset_DOI, file_paths,
                 warning(paste0("file ", j, " : ", file_path, "\n",
                                httr::status_code(response), " ",
                                httr::content(response, "text")))
+            } else if (verbose) {
+                message(paste0(" - ", round(j/nFiles*100, 1),
+                               "% : file ", file_path, " of ",
+                               round(file_size, 2), " MB added in ",
+                               round(elapsed_time, 2), " seconds (",
+                               round(upload_speed, 2), " MB/s)"))
             }
-            if (verbose) message(paste0(" - ", round(j/nFiles*100, 1),
-                                        "% : file ", file_path, " of ",
-                                        round(file_size, 2), " MB added in ",
-                                        round(elapsed_time, 2), " seconds (",
-                                        round(upload_speed, 2), " MB/s)"))
         }
         not_added = append(not_added, list(not_added_tmp))
     }
@@ -1357,6 +1386,7 @@ publish_datasets = function(dataset_DOI, type="major",
         
         publish_url = paste0(BASE_URL, "/api/datasets/:persistentId/actions/:publish?persistentId=",
                              dDOI, "&type=", type)
+        wait_dataset_unlocked(dDOI, BASE_URL=BASE_URL, API_TOKEN=API_TOKEN)
         response = httr::POST(publish_url,
                               httr::add_headers("X-Dataverse-key"=API_TOKEN))
         

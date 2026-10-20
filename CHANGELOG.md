@@ -5,6 +5,14 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+### Corrigé
+
+- `add_datasets_files()` attend, avant chaque envoi, que le jeu ne soit plus
+  verrouillé. Juste après l'ajout d'un tableau, Dataverse le verrouille le
+  temps de le convertir, et refusait le fichier suivant.
+  `publish_datasets()` attend de la même façon.
+- `add_datasets_files()` n'annonce plus « added » pour un fichier refusé.
+
 ## [0.3.0] - 2026-10-20
 
 ### Corrigé
