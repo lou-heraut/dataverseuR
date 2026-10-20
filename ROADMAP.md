@@ -6,29 +6,10 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
 
 ## Prochaines étapes
 
-1. **Corriger la conversion des métadonnées.** En cours, par une réécriture :
-   `dev/plans/2026-10-19_metadata-conversion.md`. Les tests sont en place
-   (`tests/testthat/`, sur un YAML inventé) et décrivent le comportement
-   attendu. Ils échouent sur cinq défauts constatés le 2026-10-19 :
-   - Dans un champ composé à plusieurs éléments (des auteurs, des mots-clés,
-     des périodes), les sous-champs sont numérotés par rang d'apparition et non
-     par élément (`format_metadata_tbl()`). Un sous-champ absent du premier
-     élément glisse sur l'élément voisin ; un sous-champ présent une seule fois
-     est perdu (l'ORCID du seul second auteur, par exemple). Cela se produit
-     dans les deux sens, sans message. Un champ à un seul élément reste sans
-     numéro, comme voulu au départ ; ce cas fonctionne.
-   - Un champ simple à plusieurs valeurs (deux langues) disparaît dans les deux
-     sens ; une valeur seule passe.
-   - Un YAML où aucun nom de champ ne se répète fait planter
-     `generate_metadata_json()` (`1:length()` sur un vecteur vide).
-   - La lecture du YAML devine les types : `1.10` devient 1.1, `0012` devient
-     10, `no` devient FALSE. Un nombre fait planter la conversion.
-   - Le nom du fichier de sortie se déduit par `gsub(".yml", ".json", ...)` (et
-     l'inverse) : le point y vaut « n'importe quel caractère », et un dossier
-     nommé `x_yml/` est renommé aussi.
-
-   Une fois corrigé : vérifier de bout en bout sur l'instance de démonstration,
-   et en lecture seule sur un jeu réel de l'entrepôt.
+1. **Finir la réécriture de la conversion des métadonnées**
+   (`dev/plans/2026-10-19_metadata-conversion.md`). Reste l'essai de bout en
+   bout sur l'instance de démonstration. Il attend un nouveau jeton dans
+   `.env-demo`, car l'actuel est refusé (« Bad API key »).
 2. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
    Aujourd'hui, 4 blocs sur 10 appellent des fonctions disparues, 2 autres des
    variables qu'aucun bloc ne définit, et il reste un chemin absolu vers ASHE

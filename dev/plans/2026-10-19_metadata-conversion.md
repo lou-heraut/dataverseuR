@@ -44,15 +44,30 @@ type.
    d'Explore2 de `dataverseuR_toolbox` et sur le modèle du paquet, il envoie
    les mêmes valeurs que l'ancien code, sauf là où l'ancien code déplaçait des
    sous-champs (voir plus bas).
-3. [ ] Reporter la réécriture dans `R/metadata.R` et `R/tools.R`, et retirer
-   les fonctions devenues inutiles. L'aide des tests passe par `read_yml()`.
-4. [ ] `R CMD check --as-cran` sans avertissement.
+3. [x] Réécriture reportée dans `R/metadata.R` et `R/tools.R`, et fonctions
+   devenues inutiles retirées (2026-10-20). Quatre ajouts ont suivi, pour
+   l'écriture humaine du YAML :
+   - un champ composé à un seul élément peut s'écrire sans tiret ;
+   - un champ composé écrit comme une simple valeur s'arrête sur un message ;
+   - un sous-champ écrit hors de son élément s'arrête sur un message ;
+   - `convert_metadata_to_yml()` lit aussi le JSON de
+     `generate_metadata_json()`.
+
+   `stringr` et `tibble` ne servent plus. Il y a maintenant 23 tests, et tous
+   passent.
+4. [x] `R CMD check --as-cran` : 0 erreur, 0 avertissement. Reste la note sur
+   `dotenv`, déjà notée dans `ROADMAP.md`.
 5. [ ] Essai de bout en bout sur l'instance de démonstration : créer un jeu
    depuis le YAML inventé, relire ses métadonnées, comparer, puis supprimer le
-   brouillon.
-6. [ ] Lecture seule d'un jeu réel de l'entrepôt (MAKAHO) : télécharger,
-   convertir, regénérer, comparer les valeurs.
-7. [ ] `CHANGELOG.md` et `ROADMAP.md`.
+   brouillon. Bloqué le 2026-10-20 : le jeton de `.env-demo` est refusé
+   (« Bad API key »), probablement expiré.
+6. [x] Lecture seule de MAKAHO (doi:10.57745/LNBEGZ) par l'API publique, sans
+   jeton : télécharger, convertir, regénérer, comparer.
+   - Nouveau code : les 102 valeurs en ligne reviennent à l'identique.
+   - Ancien code : 95 valeurs seulement. Il perdait les deux `kindOfData`
+     (Dataset, Image) et décalait les adresses de thésaurus d'un mot-clé vers
+     le précédent.
+7. [x] `CHANGELOG.md` et `ROADMAP.md`.
 
 ## Constats en route
 

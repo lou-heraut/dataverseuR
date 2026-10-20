@@ -5,6 +5,39 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+### Corrigé
+
+- `generate_metadata_json()` et `convert_metadata_to_yml()` sont réécrites et
+  traduisent directement le YAML en JSON et inversement. Les défauts corrigés :
+  - Chaque sous-champ reste avec son élément. Avant, un sous-champ absent du
+    premier élément glissait sur l'élément voisin, et un sous-champ présent une
+    seule fois était perdu, par exemple l'adresse d'un mot-clé.
+  - Un champ simple à plusieurs valeurs (deux langues, deux types de données)
+    ne disparaît plus.
+  - Un YAML où aucun nom de champ ne se répète ne fait plus planter la
+    conversion.
+  - Le fichier de sortie garde le bon chemin quand un dossier contient « yml »
+    ou « json » dans son nom.
+
+### Modifié
+
+- Les valeurs du YAML sont lues comme elles sont écrites : `1.10` reste `1.10`
+  et `no` reste `no`. Avant, elles devenaient 1.1 et FALSE, ou faisaient
+  planter la conversion.
+- Une erreur d'écriture dans le YAML arrête la conversion avec un message qui
+  dit quoi corriger, au lieu d'être perdue ou rattachée au hasard. C'est le cas
+  d'un champ ou d'un sous-champ inconnu, d'un sous-champ écrit hors de son
+  élément, ou d'un champ composé écrit comme une simple valeur. Un YAML qui
+  passait peut donc maintenant s'arrêter.
+- Le paquet ne dépend plus de `stringr` ni de `tibble`.
+
+### Ajouté
+
+- Un champ composé à un seul élément peut s'écrire sans tiret de liste.
+- `convert_metadata_to_yml()` lit aussi le JSON écrit par
+  `generate_metadata_json()`.
+- Des tests (testthat), sur des métadonnées inventées.
+
 ## [0.2.0] - 2026-10-19
 
 ### Ajouté

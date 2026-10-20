@@ -43,8 +43,7 @@ check_dir = function (path) {
 # Column names used unquoted in dplyr and tidyr calls, declared here so that
 # R CMD check does not take them for undefined global variables.
 utils::globalVariables(c("categories", "dataFile", "description",
-                         "global_id", "group", "group_index",
-                         "persistentId", "typeName", "value"))
+                         "global_id", "persistentId"))
 
 
 # Fonction pour sanitizer les DOI en noms de dossiers
@@ -53,4 +52,17 @@ sanitize_doi = function(doi) {
     sanitized = gsub("/", "_", sanitized)
     sanitized = gsub("\\.", "-", sanitized)
     return (sanitized)
+}
+
+
+# Reads a YAML file keeping every value as written: no guessing of numbers or
+# booleans, so that "1.10" or "no" stay texts.
+read_yml = function (path) {
+    types = c("int", "int#oct", "int#hex", "int#base60",
+              "float", "float#fix", "float#exp", "float#base60",
+              "float#inf", "float#neginf", "float#nan",
+              "bool#yes", "bool#no")
+    handlers = rep(list(function (x) x), length(types))
+    names(handlers) = types
+    return (yaml::read_yaml(path, handlers=handlers))
 }
