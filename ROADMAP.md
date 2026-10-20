@@ -40,6 +40,9 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
 ## Plus tard
 
 - Passer de `httr` (superseded) à `httr2`.
+- Mettre à jour `actions/checkout@v4` dans `.github/workflows/`. Node.js 20
+  est déprécié sur GitHub Actions, comme le signale une annotation de
+  l'intégration continue du 2026-10-20.
 - Des tests d'API avec `vcr`, sans jeton dans les enregistrements.
 - Mettre à jour la documentation : les liens vers le guide Dataverse (5.3
   aujourd'hui, 6.x courant), le lien mort vers
