@@ -2,181 +2,161 @@
 #
 # *1   INRAE, France
 #
-# This file is part of dataverseur R package.
+# This file is part of dataverseuR R package.
 #
-# dataverseur R package is free software: you can redistribute it
+# dataverseuR R package is free software: you can redistribute it
 # and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation, either version 3 of
 # the License, or (at your option) any later version.
 #
-# dataverseur R package is distributed in the hope that it will be
+# dataverseuR R package is distributed in the hope that it will be
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with dataverseur R package.
+# along with dataverseuR R package.
 # If not, see <https://www.gnu.org/licenses/>.
 
 
+# Driver script of the package: choose the actions in to_do, then run it
+# from the root of the package. One block per action; the blocks share the
+# variables set below, so that a dataset created by one block can be worked
+# on by the next ones in the same run.
+
 devtools::load_all(".")
 
-dotenv::load_dot_env(file=".env-entrepot")
-# dotenv::load_dot_env(file=".env-demo")
-
+# The demo instance by default. Switch to .env-entrepot only to act on the
+# production repository.
+dotenv::load_dot_env(file=".env-demo")
+# dotenv::load_dot_env(file=".env-entrepot")
 
 
 to_do = c(
-    # "get_metadata"
     # "search_datasets"
     # "create_dataset"
+    # "get_metadata"
     # "modify_dataset"
     # "add_files"
+    # "list_files"
+    # "rename_file"
+    # "download_files"
+    # "generate_README"
     # "delete_files"
-    # "delete_dataset"
     # "publish_dataset"
     # "get_metrics"
-    "generate_README"
+    # "move_dataset"
+    # "delete_dataset"
 )
 
 
-if ("move_dataset" %in% to_do) {
-    dataset_DOI = "doi:10.57745/XFO4GY"
-    dataset_ID = convert_DOI_to_ID(dataset_DOI)
-    move_datasets(dataset_DOI,
-                  target_dataverse="riverly")
+# The collection to work in, the dataset to work on (set by create_dataset
+# when it runs) and the local working directory, ignored by git.
+dataverse = "espacegenerique"
+dataset_DOI = ""
+work_dir = file.path("dev", "tmp")
+metadata_yml_path = file.path(work_dir, "metadata.yml")
+dir.create(work_dir, showWarnings=FALSE)
+
+
+if ("search_datasets" %in% to_do) {
+    datasets = search_datasets(query='title:"test"',
+                               dataverse=dataverse,
+                               n_search=100)
+    print(datasets)
+}
+
+
+if ("create_dataset" %in% to_do) {
+    # Starts from the metadata template of the package, kept if it already
+    # exists so that it can be filled in by hand.
+    initialise_metadata(metadata_yml_path)
+    metadata_json_path = generate_metadata_json(metadata_yml_path,
+                                                overwrite=TRUE)
+    dataset_DOI = create_datasets(dataverse, metadata_json_path)
 }
 
 
 if ("get_metadata" %in% to_do) {
-    dataset_DOI = "doi:10.57745/2YPNZ7"
-    metadata_json_path = "metadata.json"
-    get_datasets_metadata(dataset_DOI,
-                          metadata_json_path,
-                          overwrite=TRUE)
+    # The metadata of the dataset as JSON, then as a YAML file to edit before
+    # modify_dataset.
+    metadata_json_path = file.path(work_dir, "metadata.json")
+    get_datasets_metadata(dataset_DOI, metadata_json_path, overwrite=TRUE)
     convert_metadata_to_yml(metadata_json_path, overwrite=TRUE)
-
-    # stop()
-    # mpath_json = metadata_json_path
-    # mpath_yml = "metadata.yml"
-    # generate_metadata_json("metadata.yml", overwrite=TRUE)
-}
-
-
-if ("search_datasets" %in% to_do) {
-
-    
-    query = 'authorName:"Vidal, Jean-Philippe"'
-    publication_status = "RELEASED"
-    type = "dataset"
-    dataverse = ""
-    n_search = 1000
-    
-    datasets =
-        search_datasets(query=query,
-                        publication_status=publication_status,
-                        type=type,
-                        dataverse=dataverse,
-                        n_search=n_search)
-    datasets = dplyr::distinct(datasets, dataset_DOI,
-                               .keep_all=TRUE)
-}
-
-
-
-if ("create_dataset" %in% to_do) {
-    # initialise_metadata_old()
-    # source("dev/old/metadata_template.R")
-    # res = generate_metadata_old(dev=TRUE)
-    generate_metadata_json("metadata.yml")
-    dataset_DOI = create_datasets(dataverse="explore2",
-                                  metadata_path=res$metadata_path)
 }
 
 
 if ("modify_dataset" %in% to_do) {
-    initialise_metadata()
-    source("dataset_template.R")
-    META$title = gsub("XXX", "Rhône", META$title)
-    res = generate_metadata()
-    dataset_DOI = modify_dataset_metadata(dataverse="explore2",
-                                          dataset_DOI=dataset_DOI,
-                                          metadata_path=res$metadata_path)
+    metadata_json_path = generate_metadata_json(metadata_yml_path,
+                                                overwrite=TRUE)
+    modify_datasets(dataverse, dataset_DOI, metadata_json_path)
 }
+
 
 if ("add_files" %in% to_do) {
-    add_dataset_files(dataset_DOI=dataset_DOI,
-                      paths="LICENSE")
-}
-
-if ("delete_files" %in% to_do) {
-    delete_dataset_files(dataset_DOI=dataset_DOI)
-}
-
-# if ("delete_dataset" %in% to_do) {
-#     delete_dataset(dataset_DOI=dataset_DOI)
-# }
-
-
-if ("publish_dataset" %in% to_do) {
-    publish_dataset(dataset_DOI, type="major")
+    # A small table and a text file, written for the example.
+    table_path = file.path(work_dir, "flow.csv")
+    write.csv(data.frame(date=c("2020-01-01", "2020-01-02"),
+                         flow=c("1.5", "2.1")),
+              table_path, row.names=FALSE)
+    notes_path = file.path(work_dir, "notes.txt")
+    writeLines("Notes on the example dataset.", notes_path)
+    add_datasets_files(dataset_DOI, c(table_path, notes_path))
 }
 
 
-
-# datasets_DOI = get_DOI_from_datasets_search(datasets_search)
-# dataset_DOI = datasets_DOI[1]
-# metadata = get_dataset_metadata(dataset_DOI=dataset_DOI)
-
-
-# json = jsonlite::toJSON(metadata,
-#                  pretty=TRUE,
-#                  auto_unbox=TRUE)
-# write(json, "tmp.json")
-
-# convert_metadata(metadata)
+if ("list_files" %in% to_do) {
+    files = list_datasets_files(dataset_DOI)
+    print(files[c("filename", "id", "file_DOI", "filesize")])
+}
 
 
-# flatten_tibble = function (tbl, delimiter="; ") {
-#     tbl = dplyr::mutate(tbl,
-#                         across(everything(),
-#                                ~ ifelse(
-#     purrr::map_lgl(.x, is.list),
-#     purrr::map_chr(.x, ~paste(unlist(.x),
-#                               collapse=delimiter)),
-#     .x)))
-#     return (tbl)
-# }
+if ("rename_file" %in% to_do) {
+    # The files of a draft have no DOI yet: they are named by their id.
+    files = list_datasets_files(dataset_DOI)
+    id = files$id[files$filename == "notes.txt"]
+    rename_datasets_files(id, "notes_renamed.txt", is_DOI_ID=TRUE)
+}
 
 
-
-if ("get_metrics" %in% to_do) {
-    # datasets_DOI = get_DOI_from_datasets_search(datasets_search)
-    datasets_metrics = get_datasets_metrics(datasets_info$dataset_DOI)
-    datasets_info = dplyr::full_join(datasets_info, datasets_metrics,
-                                     by="dataset_DOI")
-
-    datasets_size = get_datasets_size(datasets_info$dataset_DOI)
-    datasets_info = dplyr::full_join(datasets_info, datasets_size,
-                                     by="dataset_DOI")
-    
-    ASHE::write_tibble(datasets_info,
-                       path="datasets_info.csv")
+if ("download_files" %in% to_do) {
+    # Into one directory per dataset, in work_dir.
+    download_datasets_files(dataset_DOI, work_dir, overwrite=TRUE)
 }
 
 
 if ("generate_README" %in% to_do) {
-    
-    dataset_DOI =c("doi:10.57745/VOYD57")
-    dirpath = file.path("dev", "dataverse_data_etienne")
+    # From the downloaded files: the tables are converted to CSV, then the
+    # README describes them.
+    clean_datasets_files(dataset_DOI, work_dir, overwrite=TRUE)
+    create_datasets_README(dataset_DOI, work_dir, overwrite=TRUE)
+}
 
 
-devtools::load_all("/home/lheraut/Documents/INRAE/projects/ASHE_project/ASHE")
-    stop()
+if ("delete_files" %in% to_do) {
+    delete_all_datasets_files(dataset_DOI)
+}
 
-    download_datasets_files(dataset_DOI, dirpath)
-    clean_datasets_files(dataset_DOI, dirpath, overwrite=TRUE)
-    create_datasets_README(dataset_DOI, dirpath,
-                           file_pattern="*.csv",
-                           overwrite=TRUE)
+
+if ("publish_dataset" %in% to_do) {
+    publish_datasets(dataset_DOI, type="major")
+}
+
+
+if ("get_metrics" %in% to_do) {
+    print(get_datasets_citation(dataset_DOI))
+    print(get_datasets_metrics(dataset_DOI))
+    print(get_datasets_size(dataset_DOI))
+}
+
+
+if ("move_dataset" %in% to_do) {
+    # Allowed to collection administrators only.
+    move_datasets(dataset_DOI, target_dataverse="target-collection")
+}
+
+
+if ("delete_dataset" %in% to_do) {
+    # A draft only: a published dataset cannot be deleted.
+    delete_datasets(dataset_DOI)
 }

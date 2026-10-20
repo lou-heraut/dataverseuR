@@ -92,11 +92,12 @@ type.
   d'Explore2 :
   - les mots-clés sont réécrits d'après les jeux publiés, et le contact est
     réindenté ;
-  - comparés à 22 jeux publiés, en lecture seule, les modèles ne diffèrent
-    plus que par `relatedMaterial` ;
+  - comparés en lecture seule aux 100 jeux publiés qu'ils ont produits, ils
+    correspondent champ par champ, y compris le texte autour des trous ;
   - chaque modèle, une fois ses trous remplis par un jeu publié puis créé sur
-    la démo, redonne ses 23 champs, sauf `relatedMaterial`.
+    la démo, redonne ses 23 champs.
 
-  Cet écart restant vient des jeux publiés, qui pointent encore vers
-  `github.com/louis-heraut/…`, l'ancien nom du compte. Les modèles, eux, sont
-  à jour.
+  Un seul écart reste. Les jeux publiés pointent encore vers
+  `github.com/louis-heraut/…`, l'ancien nom du compte, dans `relatedMaterial`
+  et dans la description. Les modèles, eux, sont à jour, et GitHub redirige
+  l'ancien lien. Commit `4d9e80c` de la boîte à outils.
