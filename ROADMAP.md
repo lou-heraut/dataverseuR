@@ -20,6 +20,11 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
    - Le champ `Title` répète le nom du paquet (contrôle CRAN).
    - Les fichiers d'un brouillon n'ont pas de DOI. `delete_all_datasets_files()`
      annonce alors « file  deleted », sans nom ni identifiant.
+   - `modify_datasets()` relance la requête sur une réponse « 500 {} », puis
+     attend 2 s après chaque jeu. Ces contournements datent d'octobre 2025 et
+     visaient sans doute le verrou de conversion des tableaux, que le paquet
+     attend désormais. Les scripts de `dataverseuR_toolbox` ont des `Sys.sleep()`
+     de même nature. À retirer si l'usage le confirme.
 
 ## Questions ouvertes
 
@@ -28,8 +33,10 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
   `read.csv` (types devinés, dates converties) puis réécrit
   (`ASHE/R/read_write.R`) : les valeurs peuvent changer en route (zéros de tête
   d'un code, écriture des décimales, dates ambiguës). Par défaut, elle
-  convertit aussi un simple fichier `.txt` en `.csv`, ce qui a été constaté sur
-  la démo le 2026-10-20. À voir avec un audit d'ASHE.
+  convertit aussi tout fichier `.txt` en `.csv`. Des données tabulaires
+  s'écrivent souvent en `.txt`, mais un texte libre en `.txt` ne doit pas être
+  converti : il faut savoir distinguer les deux. Constaté sur la démo le
+  2026-10-20. À voir avec un audit d'ASHE.
 - **Aligner les données sur des vocabulaires contrôlés pendant la curation**
   (unités QUDT ou UCUM, par exemple). Horizon lointain, et peut-être pas dans
   dataverseuR : le sujet dépasse le paquet. Les premiers essais sont dans le

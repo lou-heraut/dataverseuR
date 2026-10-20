@@ -760,6 +760,7 @@ modify_datasets = function(dataverse,
         modify_url = paste0(BASE_URL,
                             "/api/datasets/:persistentId/versions/:draft?persistentId=",
                             dDOI)
+        wait_dataset_unlocked(dDOI, BASE_URL=BASE_URL, API_TOKEN=API_TOKEN)
         response = httr::PUT(modify_url,
                              httr::add_headers("X-Dataverse-key"=API_TOKEN),
                              body=mjson$datasetVersion,
@@ -1325,7 +1326,8 @@ delete_all_datasets_files = function(dataset_DOI,
                                     BASE_URL=BASE_URL,
                                     API_TOKEN=API_TOKEN)
         nFiles = nrow(files)
-        
+        wait_dataset_unlocked(dDOI, BASE_URL=BASE_URL, API_TOKEN=API_TOKEN)
+
         for (j in 1:nFiles) {
             file = files[j, ]
             fID = file$id
@@ -1428,6 +1430,7 @@ delete_datasets = function(dataset_DOI,
         dDOI = dataset_DOI[i]
         
         delete_url = paste0(BASE_URL, "/api/datasets/:persistentId/?persistentId=", dDOI)
+        wait_dataset_unlocked(dDOI, BASE_URL=BASE_URL, API_TOKEN=API_TOKEN)
         response = httr::DELETE(delete_url,
                                 httr::add_headers("X-Dataverse-key"=API_TOKEN))
         

@@ -5,6 +5,14 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+### Corrigé
+
+- `modify_datasets()`, `delete_datasets()` et `delete_all_datasets_files()`
+  attendent aussi que le jeu ne soit plus verrouillé. Sur l'instance de
+  démonstration, une modification lancée juste après l'ajout d'un tableau
+  échouait en erreur 500 (4 fois sur 4). Une fois, elle a laissé le jeu
+  verrouillé pour de bon, au point de ne plus pouvoir le supprimer.
+
 ## [0.3.1] - 2026-10-20
 
 ### Corrigé
