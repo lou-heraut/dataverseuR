@@ -94,14 +94,15 @@ if ("modify_dataset" %in% to_do) {
 
 
 if ("add_files" %in% to_do) {
-    # A small table and a text file, written for the example.
+    # A small table, put in a data/ directory of the dataset, and a text file,
+    # written for the example.
     table_path = file.path(work_dir, "flow.csv")
     write.csv(data.frame(date=c("2020-01-01", "2020-01-02"),
                          flow=c("1.5", "2.1")),
               table_path, row.names=FALSE)
     notes_path = file.path(work_dir, "notes.txt")
     writeLines("Notes on the example dataset.", notes_path)
-    add_datasets_files(dataset_DOI, c(table_path, notes_path))
+    add_datasets_files(dataset_DOI, c(data=table_path, notes_path))
 }
 
 
@@ -120,16 +121,18 @@ if ("rename_file" %in% to_do) {
 
 
 if ("download_files" %in% to_do) {
-    # Into one directory per dataset, in work_dir.
-    download_datasets_files(dataset_DOI, work_dir, overwrite=TRUE)
+    download_datasets_files(dataset_DOI, file.path(work_dir, "original"),
+                            overwrite=TRUE)
 }
 
 
 if ("generate_README" %in% to_do) {
     # From the downloaded files: the tables are converted to CSV, then the
     # README describes them.
-    clean_datasets_files(dataset_DOI, work_dir, overwrite=TRUE)
-    create_datasets_README(dataset_DOI, work_dir, overwrite=TRUE)
+    clean_datasets_files(file.path(work_dir, "original"),
+                         file.path(work_dir, "cleaned"), overwrite=TRUE)
+    create_datasets_README(dataset_DOI, file.path(work_dir, "cleaned"),
+                           overwrite=TRUE)
 }
 
 

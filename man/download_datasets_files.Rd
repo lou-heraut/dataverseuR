@@ -6,7 +6,7 @@
 \usage{
 download_datasets_files(
   dataset_DOI,
-  dirpath = "dataverse_files",
+  dirpath = sanitize_doi(dataset_DOI),
   overwrite = FALSE,
   BASE_URL = Sys.getenv("BASE_URL"),
   API_TOKEN = Sys.getenv("API_TOKEN"),
@@ -16,7 +16,7 @@ download_datasets_files(
 \arguments{
 \item{dataset_DOI}{A vector of character string of dataset DOI(s). All files from each dataset will be downloaded.}
 
-\item{dirpath}{A character string representing the base local directory path where files should be saved. Defaults to \code{"dataverse_files"}. Subdirectories will be created for each dataset based on sanitized dataset DOIs.}
+\item{dirpath}{A vector of character strings, one directory per dataset, where its files are saved. Defaults to the sanitized DOI of each dataset, in the working directory (for example \code{"doi_10-57745_LNBEGZ"}).}
 
 \item{overwrite}{A logical value indicating whether to overwrite existing files. Defaults to FALSE.}
 
@@ -27,7 +27,7 @@ download_datasets_files(
 \item{verbose}{If \code{FALSE}, no processing informations are displayed. Defaults to \code{TRUE}.}
 }
 \description{
-Download all files from one or multiple datasets. Files are automatically organized in subdirectories named after sanitized dataset DOIs.
+Download all files from one or multiple datasets, each dataset into its own directory. Files keep the directory they have within the dataset.
 }
 \examples{
 \dontrun{
@@ -36,19 +36,15 @@ dotenv::load_dot_env()
 # Download all files from a single dataset
 dataset_DOI = "doi:10.57745/LNBEGZ"
 download_datasets_files(dataset_DOI)
-# Files saved in: dataverse_files/doi_10-57745_LNBEGZ/
+# Files saved in: doi_10-57745_LNBEGZ/
 
-# Download all files from multiple datasets
+# Into a chosen directory
+download_datasets_files(dataset_DOI, dirpath="LNBEGZ/original")
+
+# Several datasets, one directory each
 dataset_DOI = c("doi:10.57745/LNBEGZ", "doi:10.57745/TGYZ8L")
-download_datasets_files(dataset_DOI)
-# Files saved in: dataverse_files/doi_10-57745_LNBEGZ/ and dataverse_files/doi_10-57745_TGYZ8L/
-
-# With custom save directory
-download_datasets_files(dataset_DOI, dirpath="my_files")
-
-# Works with DRAFT datasets too
-dataset_DOI = "doi:10.57745/LNBEGZ"
-download_datasets_files(dataset_DOI)
+download_datasets_files(dataset_DOI,
+                        dirpath=c("data/LNBEGZ", "data/TGYZ8L"))
 }
 }
 \seealso{

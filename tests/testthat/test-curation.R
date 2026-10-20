@@ -24,3 +24,32 @@ test_that("several README fields are written one per line", {
     expect_equal(format_yml(c("A", "B"), c("1", "2")), "A: 1\nB: 2")
     expect_error(format_yml(c("A", "B"), c("1", "2", "3")))
 })
+
+test_that("a directory summary counts its directories and files", {
+    dir = tempfile()
+    dir.create(file.path(dir, "sub"), recursive=TRUE)
+    writeLines("x", file.path(dir, "a.txt"))
+    writeLines("x", file.path(dir, "sub", "b.txt"))
+    expect_equal(get_info_dir(dir), "1 directory, 2 files")
+    dir.create(file.path(dir, "other"))
+    expect_equal(get_info_dir(dir), "2 directories, 2 files")
+})
+
+test_that("tables are converted into the output directory, keeping subdirectories", {
+    # ASHE::convert_tibble() calls lubridate, which ASHE does not declare.
+    skip_if_not_installed("lubridate")
+    input_dir = tempfile()
+    output_dir = tempfile()
+    dir.create(file.path(input_dir, "sub"), recursive=TRUE)
+    writeLines(c("a;b", "1;2"), file.path(input_dir, "table.csv"))
+    writeLines(c("a\tb", "1\t2"), file.path(input_dir, "sub", "other.tab"))
+    writeLines("Notes", file.path(input_dir, "README.txt"))
+    clean_datasets_files(input_dir, output_dir, verbose=FALSE)
+    expect_setequal(list.files(output_dir, recursive=TRUE),
+                    c("table.csv", file.path("sub", "other.csv")))
+})
+
+test_that("cleaning needs one output directory per input directory", {
+    expect_error(clean_datasets_files(c("a", "b"), "c"),
+                 "one directory per input directory")
+})

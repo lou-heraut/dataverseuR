@@ -5,8 +5,8 @@
 \title{clean_datasets_files}
 \usage{
 clean_datasets_files(
-  dataset_DOI,
-  dirpath = "dataverse_files",
+  input_dir,
+  output_dir,
   include_extensions = c("csv", "txt", "tab"),
   exclude_patterns = c("tmp", "readme", "license", "licence", "citation"),
   output_extension = ".csv",
@@ -15,13 +15,13 @@ clean_datasets_files(
 )
 }
 \arguments{
-\item{dataset_DOI}{A vector of character strings of dataset DOI(s). Files from each dataset will be cleaned.}
+\item{input_dir}{A vector of character strings: the directories whose files are converted, for example those filled by \code{\link[=download_datasets_files]{download_datasets_files()}}.}
 
-\item{dirpath}{A character string representing the base local directory path where original files are located and where cleaned files will be saved. Defaults to \code{"dataverse_files"}. Cleaned files will be saved in subdirectories named \verb{\{sanitized_doi\}_cleaned}.}
+\item{output_dir}{A vector of character strings, one per input directory: where the converted files are saved.}
 
-\item{include_extensions}{A vector of character strings representing file extensions to include for cleaning. Defaults to \code{c("csv", "txt", "tab", "tsv", "dat")}. Extensions should be provided without the dot.}
+\item{include_extensions}{A vector of character strings representing file extensions to include for cleaning. Defaults to \code{c("csv", "txt", "tab")}. Extensions should be provided without the dot.}
 
-\item{exclude_patterns}{A vector of character strings representing patterns to exclude from cleaning. Files matching any of these patterns (case-insensitive) will be skipped. Defaults to \code{c("readme", "license", "licence", "citation")}. Set to \code{NULL} to disable exclusion.}
+\item{exclude_patterns}{A vector of character strings representing patterns to exclude from cleaning. Files whose name matches any of these patterns (case-insensitive) will be skipped. Defaults to \code{c("tmp", "readme", "license", "licence", "citation")}. Set to \code{NULL} to disable exclusion.}
 
 \item{output_extension}{A character string representing the output file extension. Defaults to \code{".csv"}. The original extension will be replaced by this one.}
 
@@ -30,44 +30,19 @@ clean_datasets_files(
 \item{verbose}{If \code{FALSE}, no processing informations are displayed. Defaults to \code{TRUE}.}
 }
 \value{
-A list of results from ASHE::convert_tibble for each processed file, organized by dataset.
+A list of results from ASHE::convert_tibble for each processed file, by input directory.
 }
 \description{
-Clean and convert dataset files using ASHE::convert_tibble. Processes tabular files from specified datasets and saves cleaned versions in organized directories. By default, processes common tabular formats while excluding README and metadata files.
+Convert the tabular files of a directory to clean CSV files with ASHE::convert_tibble, keeping its subdirectories. By default, processes common tabular formats while excluding README and license files.
 }
 \examples{
 \dontrun{
-dotenv::load_dot_env()
+# Convert the files of a downloaded dataset
+clean_datasets_files("LNBEGZ/original", "LNBEGZ/cleaned")
 
-# Clean tabular files from a single dataset (default behavior)
-dataset_DOI = "doi:10.57745/LNBEGZ"
-clean_datasets_files(dataset_DOI)
-# Processes: .csv, .txt, .tab, .tsv, .dat
-# Excludes: files containing "readme", "license", "citation"
-# Original files in: dataverse_files/doi_10-57745_LNBEGZ/
-# Cleaned files in: dataverse_files/doi_10-57745_LNBEGZ_cleaned/
-
-# Clean files from multiple datasets
-dataset_DOI = c("doi:10.57745/LNBEGZ", "doi:10.57745/TGYZ8L")
-clean_datasets_files(dataset_DOI)
-
-# Only clean CSV files
-clean_datasets_files(dataset_DOI, include_extensions="csv")
-
-# Add custom exclusion patterns
-clean_datasets_files(dataset_DOI, 
-                     exclude_patterns=c("readme", "license", "metadata", "description"))
-
-# Disable exclusions (process all matching extensions)
-clean_datasets_files(dataset_DOI, exclude_patterns=NULL)
-
-# Custom extensions and output format
-clean_datasets_files(dataset_DOI, 
-                     include_extensions=c("csv", "tsv"),
-                     output_extension=".parquet")
-
-# With custom directory
-clean_datasets_files(dataset_DOI, dirpath="my_data")
+# Only CSV files, without any exclusion
+clean_datasets_files("LNBEGZ/original", "LNBEGZ/cleaned",
+                     include_extensions="csv", exclude_patterns=NULL)
 }
 }
 \seealso{

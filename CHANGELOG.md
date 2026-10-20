@@ -5,8 +5,28 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+### Modifié
+
+- Les fonctions sur les fichiers reçoivent leurs dossiers au lieu de les
+  déduire du DOI :
+  - `download_datasets_files(dataset_DOI, dirpath)` : `dirpath` donne un
+    dossier par jeu, par défaut le DOI assaini dans le dossier courant. Les
+    fichiers gardent leur sous-dossier dans le jeu. Avant, ils allaient tous à
+    plat dans `dataverse_files/doi_…/`.
+  - `clean_datasets_files(input_dir, output_dir)` ne prend plus de DOI. Il
+    convertit les tableaux d'un dossier vers un autre, sous-dossiers compris.
+    Avant, il lisait `doi_…/` et écrivait dans `doi_…_cleaned/`.
+  - `create_datasets_README(dataset_DOI, dirpath, README_path)` décrit le
+    dossier donné et écrit le README à l'endroit demandé, par défaut dans ce
+    dossier. Son champ `Path:` donne le dossier du fichier dans le jeu (`.`,
+    `./data`), et non plus le chemin local.
+
 ### Corrigé
 
+- Le README compte les dossiers de son arborescence (« 1 directory,
+  2 files »). Avant, il annonçait toujours « 0 directoryies ».
+- Le README ne se décrit plus lui-même quand il est régénéré dans le dossier
+  qu'il décrit. Un dossier vide ne fait plus échouer sa génération.
 - `modify_datasets()`, `delete_datasets()` et `delete_all_datasets_files()`
   attendent aussi que le jeu ne soit plus verrouillé. Sur l'instance de
   démonstration, une modification lancée juste après l'ajout d'un tableau

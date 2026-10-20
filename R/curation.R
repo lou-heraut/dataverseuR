@@ -53,15 +53,16 @@ format_yml = function (line_title, line_content, indent=0, nchar_line=80) {
 get_info_dir = function(path) {
     paths = list.files(path,
                        recursive=TRUE,
+                       include.dirs=TRUE,
                        all.files=FALSE,
                        full.names=TRUE)
     n_files = sum(file.info(paths)$isdir == FALSE, na.rm=TRUE)
     n_dirs = sum(file.info(paths)$isdir == TRUE, na.rm=TRUE)
     
     info = sprintf(
-        "%d directory%s, %d file%s",
+        "%d %s, %d file%s",
         n_dirs,
-        ifelse(n_dirs == 1, "", "ies"),
+        ifelse(n_dirs == 1, "directory", "directories"),
         n_files,
         ifelse(n_files == 1, "", "s"))
     
@@ -71,48 +72,23 @@ get_info_dir = function(path) {
 
 
 #' @title clean_datasets_files
-#' @description Clean and convert dataset files using ASHE::convert_tibble. Processes tabular files from specified datasets and saves cleaned versions in organized directories. By default, processes common tabular formats while excluding README and metadata files.
-#' @param dataset_DOI A vector of character strings of dataset DOI(s). Files from each dataset will be cleaned.
-#' @param dirpath A character string representing the base local directory path where original files are located and where cleaned files will be saved. Defaults to `"dataverse_files"`. Cleaned files will be saved in subdirectories named `{sanitized_doi}_cleaned`.
-#' @param include_extensions A vector of character strings representing file extensions to include for cleaning. Defaults to `c("csv", "txt", "tab", "tsv", "dat")`. Extensions should be provided without the dot.
-#' @param exclude_patterns A vector of character strings representing patterns to exclude from cleaning. Files matching any of these patterns (case-insensitive) will be skipped. Defaults to `c("readme", "license", "licence", "citation")`. Set to `NULL` to disable exclusion.
+#' @description Convert the tabular files of a directory to clean CSV files with ASHE::convert_tibble, keeping its subdirectories. By default, processes common tabular formats while excluding README and license files.
+#' @param input_dir A vector of character strings: the directories whose files are converted, for example those filled by [download_datasets_files()].
+#' @param output_dir A vector of character strings, one per input directory: where the converted files are saved.
+#' @param include_extensions A vector of character strings representing file extensions to include for cleaning. Defaults to `c("csv", "txt", "tab")`. Extensions should be provided without the dot.
+#' @param exclude_patterns A vector of character strings representing patterns to exclude from cleaning. Files whose name matches any of these patterns (case-insensitive) will be skipped. Defaults to `c("tmp", "readme", "license", "licence", "citation")`. Set to `NULL` to disable exclusion.
 #' @param output_extension A character string representing the output file extension. Defaults to `".csv"`. The original extension will be replaced by this one.
 #' @param overwrite A logical value indicating whether to overwrite existing files. Defaults to FALSE.
 #' @param verbose If `FALSE`, no processing informations are displayed. Defaults to `TRUE`.
-#' @return A list of results from ASHE::convert_tibble for each processed file, organized by dataset.
+#' @return A list of results from ASHE::convert_tibble for each processed file, by input directory.
 #' @examples
 #' \dontrun{
-#' dotenv::load_dot_env()
+#' # Convert the files of a downloaded dataset
+#' clean_datasets_files("LNBEGZ/original", "LNBEGZ/cleaned")
 #' 
-#' # Clean tabular files from a single dataset (default behavior)
-#' dataset_DOI = "doi:10.57745/LNBEGZ"
-#' clean_datasets_files(dataset_DOI)
-#' # Processes: .csv, .txt, .tab, .tsv, .dat
-#' # Excludes: files containing "readme", "license", "citation"
-#' # Original files in: dataverse_files/doi_10-57745_LNBEGZ/
-#' # Cleaned files in: dataverse_files/doi_10-57745_LNBEGZ_cleaned/
-#' 
-#' # Clean files from multiple datasets
-#' dataset_DOI = c("doi:10.57745/LNBEGZ", "doi:10.57745/TGYZ8L")
-#' clean_datasets_files(dataset_DOI)
-#' 
-#' # Only clean CSV files
-#' clean_datasets_files(dataset_DOI, include_extensions="csv")
-#' 
-#' # Add custom exclusion patterns
-#' clean_datasets_files(dataset_DOI, 
-#'                      exclude_patterns=c("readme", "license", "metadata", "description"))
-#' 
-#' # Disable exclusions (process all matching extensions)
-#' clean_datasets_files(dataset_DOI, exclude_patterns=NULL)
-#' 
-#' # Custom extensions and output format
-#' clean_datasets_files(dataset_DOI, 
-#'                      include_extensions=c("csv", "tsv"),
-#'                      output_extension=".parquet")
-#' 
-#' # With custom directory
-#' clean_datasets_files(dataset_DOI, dirpath="my_data")
+#' # Only CSV files, without any exclusion
+#' clean_datasets_files("LNBEGZ/original", "LNBEGZ/cleaned",
+#'                      include_extensions="csv", exclude_patterns=NULL)
 #' }
 #' @seealso
 #' - [download_datasets_files()] for downloading dataset files
@@ -120,128 +96,81 @@ get_info_dir = function(path) {
 #' - [dataverseuR GitHub documentation](https://github.com/lou-heraut/dataverseuR) <https://github.com/lou-heraut/dataverseuR>
 #' @md
 #' @export
-clean_datasets_files = function(dataset_DOI,
-                                dirpath="dataverse_files",
+clean_datasets_files = function(input_dir,
+                                output_dir,
                                 include_extensions=c("csv", "txt", "tab"),
                                 exclude_patterns=c("tmp", "readme", "license",
                                                    "licence", "citation"),
                                 output_extension=".csv",
                                 overwrite=FALSE,
                                 verbose=TRUE) {
-    
-    nDatasets = length(dataset_DOI)
+
+    if (length(output_dir) != length(input_dir)) {
+        stop("output_dir needs one directory per input directory.")
+    }
     all_results = list()
-    # all_outdir = c()
-    
-    for (i in 1:nDatasets) {
-        dDOI = dataset_DOI[i]
-        sanitized_doi = sanitize_doi(dDOI)
-        
-        # Définir les chemins d'entrée et de sortie
-        input_dir = file.path(dirpath, sanitized_doi)
-        output_dir = file.path(dirpath, paste0(sanitized_doi, "_cleaned"))
-        
-        # Vérifier que le dossier d'entrée existe
-        if (!dir.exists(input_dir)) {
-            warning(paste0("Input directory does not exist: ", input_dir, 
-                          ". Skipping dataset ", dDOI))
+
+    for (i in seq_along(input_dir)) {
+        if (!dir.exists(input_dir[i])) {
+            warning(paste0("Input directory does not exist: ", input_dir[i]))
             next
         }
-        
-        # Créer le dossier de sortie
-        if (!dir.exists(output_dir)) {
-            dir.create(output_dir, recursive=TRUE)
-        }
-        
-        # Lister tous les fichiers du dossier
-        all_files = list.files(input_dir, full.names=TRUE)
-        
-        if (length(all_files) == 0) {
-            if (verbose) {
-                message(paste0("No files found in ", input_dir))
-            }
-            next
-        }
-        
-        # Filtrer par extension
-        file_extensions = tolower(tools::file_ext(all_files))
-        include_mask = file_extensions %in% tolower(include_extensions)
-        input_paths = all_files[include_mask]
-        
-        if (length(input_paths) == 0) {
-            if (verbose) {
-                message(paste0("No files with extensions [", 
-                              paste(include_extensions, collapse=", "),
-                              "] found in ", input_dir))
-            }
-            next
-        }
-        
-        # Filtrer par patterns d'exclusion (case-insensitive)
+
+        # Paths relative to the input directory, to keep its subdirectories.
+        files = list.files(input_dir[i], recursive=TRUE)
+        files = files[tolower(tools::file_ext(files)) %in%
+                      tolower(include_extensions)]
+
         if (!is.null(exclude_patterns) && length(exclude_patterns) > 0) {
-            file_basenames = tolower(basename(input_paths))
-            exclude_mask = rep(FALSE, length(input_paths))
-            
+            excluded = rep(FALSE, length(files))
             for (pattern in exclude_patterns) {
-                exclude_mask = exclude_mask | grepl(tolower(pattern), file_basenames)
+                excluded = excluded |
+                    grepl(tolower(pattern), tolower(basename(files)))
             }
-            
-            excluded_files = input_paths[exclude_mask]
-            input_paths = input_paths[!exclude_mask]
-            
-            if (verbose && length(excluded_files) > 0) {
-                message(paste0("Excluded ", length(excluded_files), 
-                              " file(s) matching exclusion patterns: ",
-                              paste(basename(excluded_files), collapse=", ")))
+            if (verbose && any(excluded)) {
+                message(paste0("Excluded ", sum(excluded),
+                               " file(s) matching exclusion patterns: ",
+                               paste(basename(files[excluded]), collapse=", ")))
             }
+            files = files[!excluded]
         }
-        
-        if (length(input_paths) == 0) {
+
+        if (length(files) == 0) {
             if (verbose) {
-                message(paste0("No files remaining after applying exclusion filters for dataset ",
-                              convert_DOI_to_URL(dDOI)))
+                message(paste0("No file to convert in ", input_dir[i]))
             }
             next
         }
-        
-        # Créer les chemins de sortie
-        output_paths = file.path(output_dir, basename(input_paths))
-        
-        # Remplacer l'extension
+
+        input_paths = file.path(input_dir[i], files)
+        output_paths = file.path(output_dir[i], files)
         if (!is.null(output_extension) && output_extension != "") {
             output_paths = sub("\\.[^.]*$", output_extension, output_paths)
         }
-        
-        if (verbose) {
-            message(paste0("Processing ", length(input_paths), " file(s) from dataset ",
-                           convert_DOI_to_URL(dDOI)))
+        for (dir in unique(dirname(output_paths))) {
+            dir.create(dir, recursive=TRUE, showWarnings=FALSE)
         }
-        
-        results = mapply(ASHE::convert_tibble,
-                         path=input_paths,
-                         output_path=output_paths,
-                         read_guess_sep=TRUE,
-                         read_guess_text_encoding=TRUE,
-                         overwrite=overwrite,
-                         SIMPLIFY=FALSE)
 
-        all_results[[dDOI]] = results
-        # all_outdir[dDOI] = output_dir
-        
         if (verbose) {
-            message(paste0("Dataset ", convert_DOI_to_URL(dDOI), 
-                          " cleaned: ", length(input_paths), 
-                          " file(s) saved in ", output_dir))
+            message(paste0("Processing ", length(files), " file(s) from ",
+                           input_dir[i]))
+        }
+        all_results[[input_dir[i]]] = mapply(ASHE::convert_tibble,
+                                             path=input_paths,
+                                             output_path=output_paths,
+                                             read_guess_sep=TRUE,
+                                             read_guess_text_encoding=TRUE,
+                                             overwrite=overwrite,
+                                             SIMPLIFY=FALSE)
+        if (verbose) {
+            message(paste0(length(files), " file(s) saved in ", output_dir[i]))
         }
     }
-    
+
     if (verbose && length(all_results) > 0) {
-        total_files = sum(sapply(all_results, length))
-        message(paste0("Cleaning complete: ", total_files, 
-                      " file(s) processed across ", 
-                      length(all_results), " dataset(s)"))
+        message(paste0("Cleaning complete: ", sum(lengths(all_results)),
+                       " file(s) processed"))
     }
-    
     invisible(all_results)
 }
 
@@ -250,33 +179,27 @@ clean_datasets_files = function(dataset_DOI,
 #' @title create_datasets_README
 #' @description Automatically generates README files for one or multiple datasets. Creates structured documentation including metadata, file descriptions, and column information for cleaned datasets.
 #' @param dataset_DOI A vector of character strings of dataset DOI(s). A README will be created for each dataset.
-#' @param dirpath A character string representing the base local directory path where cleaned datasets are located. Defaults to `"dataverse_files"`. README files will be created in subdirectories named `{sanitized_doi}_cleaned`.
+#' @param dirpath A vector of character strings, one per dataset: the directory whose files the README describes, for example the one filled by [clean_datasets_files()].
+#' @param README_path A vector of character strings, one per dataset: where the README is written. Defaults to `README.txt` in `dirpath`.
 #' @param file_pattern A character string representing the file pattern to document in the README. Defaults to `"*.csv"`. Use standard glob patterns (e.g., `"*.tsv"`, `"*"` for all files).
 #' @param overwrite A logical value indicating whether to overwrite existing README files. Defaults to `FALSE`.
 #' @param BASE_URL A character string for the base URL of the Dataverse API. By default, it uses the value from the environment variable `BASE_URL`.
 #' @param API_TOKEN A character string for the API token required to authenticate the request. By default, it uses the value from the environment variable `API_TOKEN`.
 #' @param verbose If `FALSE`, no processing informations are displayed. Defaults to `TRUE`.
-#' @return Invisible NULL. README files are created in the appropriate directories.
+#' @return Invisible NULL. The README files are written to `README_path`.
 #' @examples
 #' \dontrun{
 #' dotenv::load_dot_env()
 #' 
-#' # Create README for a single dataset
+#' # Describe the cleaned files of a dataset
 #' dataset_DOI = "doi:10.57745/LNBEGZ"
-#' create_datasets_README(dataset_DOI)
-#' # README created in: dataverse_files/doi_10-57745_LNBEGZ_cleaned/README.txt
+#' create_datasets_README(dataset_DOI, "LNBEGZ/cleaned")
+#' # README written in: LNBEGZ/cleaned/README.txt
 #' 
-#' # Create READMEs for multiple datasets
-#' dataset_DOI = c("doi:10.57745/LNBEGZ", "doi:10.57745/TGYZ8L")
-#' create_datasets_README(dataset_DOI)
-#' 
-#' # With custom directory and file pattern
-#' create_datasets_README(dataset_DOI, 
-#'                        dirpath="my_data",
-#'                        file_pattern="*.tsv")
-#' 
-#' # Overwrite existing README
-#' create_datasets_README(dataset_DOI, overwrite=TRUE)
+#' # Elsewhere, describing the columns of TSV files, replacing an existing README
+#' create_datasets_README(dataset_DOI, "LNBEGZ/cleaned",
+#'                        README_path="LNBEGZ/README.txt",
+#'                        file_pattern="*.tsv", overwrite=TRUE)
 #' }
 #' @note
 #' The function uses a template README file included in the package. Column information sections are pre-filled with placeholders that need to be manually completed (description, long_name, unit, allowed_values).
@@ -289,7 +212,8 @@ clean_datasets_files = function(dataset_DOI,
 #' @md
 #' @export
 create_datasets_README = function(dataset_DOI,
-                                  dirpath="dataverse_files",
+                                  dirpath,
+                                  README_path=file.path(dirpath, "README.txt"),
                                   file_pattern="*.csv",
                                   overwrite=FALSE,
                                   BASE_URL=Sys.getenv("BASE_URL"),
@@ -297,24 +221,23 @@ create_datasets_README = function(dataset_DOI,
                                   verbose=TRUE) {
 
     nDatasets = length(dataset_DOI)
+    if (length(dirpath) != nDatasets || length(README_path) != nDatasets) {
+        stop("dirpath and README_path need one value per dataset.")
+    }
     
     for (idx in 1:nDatasets) {
         dDOI = dataset_DOI[idx]
-
-        sanitized_doi = sanitize_doi(dDOI)
-        RDG_datadir = file.path(dirpath, paste0(sanitized_doi, "_cleaned"))
-        README_path = file.path(RDG_datadir, "README.txt")
+        RDG_datadir = dirpath[idx]
+        readme_path = README_path[idx]
         
-        # Vérifier que le dossier existe
         if (!dir.exists(RDG_datadir)) {
             warning(paste0("Directory does not exist: ", RDG_datadir, 
                           ". Skipping dataset ", dDOI))
             next
         }
         
-        # Vérifier l'overwrite
-        if (file.exists(README_path) && !overwrite) {
-            warning(paste0("README already exists at ", README_path, 
+        if (file.exists(readme_path) && !overwrite) {
+            warning(paste0("README already exists at ", readme_path, 
                           " and overwrite is FALSE. Skipping dataset ", dDOI))
             next
         }
@@ -386,18 +309,18 @@ create_datasets_README = function(dataset_DOI,
         tree = paste0(tree, collapse="\n")
         README = gsub("[{]TREE[}]", tree, README)
         
-        # Lister les fichiers à documenter
-        # Paths = list.files(RDG_datadir, pattern=glob2rx(file_pattern),
-                           # full.names=TRUE)
-        Paths = list.files(RDG_datadir, full.names=TRUE)
+        # The files to describe, relative to dirpath, without the README.
+        Paths = list.files(RDG_datadir, recursive=TRUE)
+        Paths = Paths[normalizePath(file.path(RDG_datadir, Paths)) !=
+                      normalizePath(readme_path, mustWork=FALSE)]
         nPaths = length(Paths)
         if (nPaths == 0) {
-            message(paste0("No files matching pattern found in ", RDG_datadir))
+            message(paste0("No file to describe in ", RDG_datadir))
         }
 
         data_info = c()
-        for (i in 1:nPaths) {
-            path = Paths[i]
+        for (i in seq_len(nPaths)) {
+            path = file.path(RDG_datadir, Paths[i])
 
             RDG_FILE_DESCRIPTION = "**complete file description**"
             subsection = paste0("## File ", i)
@@ -407,7 +330,12 @@ create_datasets_README = function(dataset_DOI,
                                        collapse=""))
             
             filename = paste0("Filename: ", basename(path))
-            dir = paste0("Path: ", dirname(path))
+            # The directory of the file within the dataset, as in the tree.
+            dir_in_dataset = dirname(Paths[i])
+            if (dir_in_dataset != ".") {
+                dir_in_dataset = file.path(".", dir_in_dataset)
+            }
+            dir = paste0("Path: ", dir_in_dataset)
             description = format_yml("Description",
                                      RDG_FILE_DESCRIPTION,
                                      0, nchar_line)
@@ -440,13 +368,13 @@ create_datasets_README = function(dataset_DOI,
         data_info = paste0(data_info, collapse="\n\n")        
         README = gsub("[{]DATA[}]", data_info, README)
         
-        # Écrire le README
-        writeLines(README, README_path)
+        dir.create(dirname(readme_path), recursive=TRUE, showWarnings=FALSE)
+        writeLines(README, readme_path)
         
         if (verbose) {
             message(paste0(round(idx / nDatasets * 100, 1),
                           "% : README for dataset ", convert_DOI_to_URL(dDOI),
-                          " created at ", README_path))
+                          " created at ", readme_path))
         }
     }
     

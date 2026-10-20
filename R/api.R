@@ -1127,9 +1127,9 @@ download_some_datasets_files = function(file_DOI,
 
 
 #' @title download_datasets_files
-#' @description Download all files from one or multiple datasets. Files are automatically organized in subdirectories named after sanitized dataset DOIs.
+#' @description Download all files from one or multiple datasets, each dataset into its own directory. Files keep the directory they have within the dataset.
 #' @param dataset_DOI A vector of character string of dataset DOI(s). All files from each dataset will be downloaded.
-#' @param dirpath A character string representing the base local directory path where files should be saved. Defaults to `"dataverse_files"`. Subdirectories will be created for each dataset based on sanitized dataset DOIs.
+#' @param dirpath A vector of character strings, one directory per dataset, where its files are saved. Defaults to the sanitized DOI of each dataset, in the working directory (for example `"doi_10-57745_LNBEGZ"`).
 #' @param overwrite A logical value indicating whether to overwrite existing files. Defaults to FALSE.
 #' @param BASE_URL A character string for the base URL of the Dataverse API. By default, it uses the value from the environment variable `BASE_URL`.
 #' @param API_TOKEN A character string for the API token required to authenticate the request. By default, it uses the value from the environment variable `API_TOKEN`.
@@ -1141,19 +1141,15 @@ download_some_datasets_files = function(file_DOI,
 #' # Download all files from a single dataset
 #' dataset_DOI = "doi:10.57745/LNBEGZ"
 #' download_datasets_files(dataset_DOI)
-#' # Files saved in: dataverse_files/doi_10-57745_LNBEGZ/
-#' 
-#' # Download all files from multiple datasets
+#' # Files saved in: doi_10-57745_LNBEGZ/
+#'
+#' # Into a chosen directory
+#' download_datasets_files(dataset_DOI, dirpath="LNBEGZ/original")
+#'
+#' # Several datasets, one directory each
 #' dataset_DOI = c("doi:10.57745/LNBEGZ", "doi:10.57745/TGYZ8L")
-#' download_datasets_files(dataset_DOI)
-#' # Files saved in: dataverse_files/doi_10-57745_LNBEGZ/ and dataverse_files/doi_10-57745_TGYZ8L/
-#' 
-#' # With custom save directory
-#' download_datasets_files(dataset_DOI, dirpath="my_files")
-#' 
-#' # Works with DRAFT datasets too
-#' dataset_DOI = "doi:10.57745/LNBEGZ"
-#' download_datasets_files(dataset_DOI)
+#' download_datasets_files(dataset_DOI,
+#'                         dirpath=c("data/LNBEGZ", "data/TGYZ8L"))
 #' }
 #' @seealso
 #' - [dataverseuR GitHub documentation](https://github.com/lou-heraut/dataverseuR) <https://github.com/lou-heraut/dataverseuR>
@@ -1162,17 +1158,20 @@ download_some_datasets_files = function(file_DOI,
 #' @md
 #' @export
 download_datasets_files = function(dataset_DOI,
-                                   dirpath="dataverse_files",
+                                   dirpath=sanitize_doi(dataset_DOI),
                                    overwrite=FALSE,
                                    BASE_URL=Sys.getenv("BASE_URL"),
                                    API_TOKEN=Sys.getenv("API_TOKEN"),
                                    verbose=TRUE) {
-    
+
     nDatasets = length(dataset_DOI)
+    if (length(dirpath) != nDatasets) {
+        stop("dirpath needs one directory per dataset.")
+    }
     total_files = 0
     files_downloaded = 0
-    
-    # Compter le nombre total de fichiers pour la progression
+
+    # Total number of files, for the progress messages
     if (verbose) {
         for (dDOI in dataset_DOI) {
             files_info = list_datasets_files(dDOI, BASE_URL, API_TOKEN)
@@ -1180,33 +1179,35 @@ download_datasets_files = function(dataset_DOI,
         }
     }
 
-    # Télécharger les fichiers de chaque dataset
     for (i in 1:nDatasets) {
         dDOI = dataset_DOI[i]
-        
-        # Récupérer les métadonnées des fichiers
+
         files_info = list_datasets_files(dDOI, BASE_URL, API_TOKEN)
-        
+
         if (nrow(files_info) == 0) {
             if (verbose) {
                 message(paste0("No files found in dataset ", convert_DOI_to_URL(dDOI)))
             }
             next
         }
-        
-        # Créer le dossier pour ce dataset
-        sanitized_doi = sanitize_doi(dDOI)
-        dataset_dir = file.path(dirpath, sanitized_doi)
-        if (!dir.exists(dataset_dir)) {
-            dir.create(dataset_dir, recursive=TRUE)
-        }
 
-        # Télécharger chaque fichier du dataset
+        # The directory of each file within the dataset, empty at its root.
+        file_dirs = files_info$directoryLabel
+        if (is.null(file_dirs)) {
+            file_dirs = rep("", nrow(files_info))
+        }
+        file_dirs[is.na(file_dirs)] = ""
+
         for (j in 1:nrow(files_info)) {
             file_id = files_info$id[j]
             file_label = files_info$label[j]
-            save_path = file.path(dataset_dir, file_label)
-            
+            save_dir = dirpath[i]
+            if (nzchar(file_dirs[j])) {
+                save_dir = file.path(save_dir, file_dirs[j])
+            }
+            dir.create(save_dir, recursive=TRUE, showWarnings=FALSE)
+            save_path = file.path(save_dir, file_label)
+
             api_url = paste0(BASE_URL, "/api/access/datafile/", file_id)
             
             response = httr::GET(api_url, 

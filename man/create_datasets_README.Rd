@@ -6,7 +6,8 @@
 \usage{
 create_datasets_README(
   dataset_DOI,
-  dirpath = "dataverse_files",
+  dirpath,
+  README_path = file.path(dirpath, "README.txt"),
   file_pattern = "*.csv",
   overwrite = FALSE,
   BASE_URL = Sys.getenv("BASE_URL"),
@@ -17,7 +18,9 @@ create_datasets_README(
 \arguments{
 \item{dataset_DOI}{A vector of character strings of dataset DOI(s). A README will be created for each dataset.}
 
-\item{dirpath}{A character string representing the base local directory path where cleaned datasets are located. Defaults to \code{"dataverse_files"}. README files will be created in subdirectories named \verb{\{sanitized_doi\}_cleaned}.}
+\item{dirpath}{A vector of character strings, one per dataset: the directory whose files the README describes, for example the one filled by \code{\link[=clean_datasets_files]{clean_datasets_files()}}.}
+
+\item{README_path}{A vector of character strings, one per dataset: where the README is written. Defaults to \code{README.txt} in \code{dirpath}.}
 
 \item{file_pattern}{A character string representing the file pattern to document in the README. Defaults to \code{"*.csv"}. Use standard glob patterns (e.g., \code{"*.tsv"}, \code{"*"} for all files).}
 
@@ -30,7 +33,7 @@ create_datasets_README(
 \item{verbose}{If \code{FALSE}, no processing informations are displayed. Defaults to \code{TRUE}.}
 }
 \value{
-Invisible NULL. README files are created in the appropriate directories.
+Invisible NULL. The README files are written to \code{README_path}.
 }
 \description{
 Automatically generates README files for one or multiple datasets. Creates structured documentation including metadata, file descriptions, and column information for cleaned datasets.
@@ -42,22 +45,15 @@ The function uses a template README file included in the package. Column informa
 \dontrun{
 dotenv::load_dot_env()
 
-# Create README for a single dataset
+# Describe the cleaned files of a dataset
 dataset_DOI = "doi:10.57745/LNBEGZ"
-create_datasets_README(dataset_DOI)
-# README created in: dataverse_files/doi_10-57745_LNBEGZ_cleaned/README.txt
+create_datasets_README(dataset_DOI, "LNBEGZ/cleaned")
+# README written in: LNBEGZ/cleaned/README.txt
 
-# Create READMEs for multiple datasets
-dataset_DOI = c("doi:10.57745/LNBEGZ", "doi:10.57745/TGYZ8L")
-create_datasets_README(dataset_DOI)
-
-# With custom directory and file pattern
-create_datasets_README(dataset_DOI, 
-                       dirpath="my_data",
-                       file_pattern="*.tsv")
-
-# Overwrite existing README
-create_datasets_README(dataset_DOI, overwrite=TRUE)
+# Elsewhere, describing the columns of TSV files, replacing an existing README
+create_datasets_README(dataset_DOI, "LNBEGZ/cleaned",
+                       README_path="LNBEGZ/README.txt",
+                       file_pattern="*.tsv", overwrite=TRUE)
 }
 }
 \seealso{

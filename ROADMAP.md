@@ -6,12 +6,7 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
 
 ## Prochaines étapes
 
-1. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
-   téléchargement, de nettoyage et de README déduisent leurs dossiers du DOI
-   (`{doi}/`, `{doi}_cleaned/`), et le champ `Path:` du README écrit le chemin
-   local. Trouver quelque chose de plus simple et plus propre.
-2. **Petits défauts.**
-   - « directoryies » dans `get_info_dir()`.
+1. **Petits défauts.**
    - L'argument inutilisé `dataverse` de `modify_datasets()`.
    - La valeur de retour de `get_datasets_metadata()`, qui ne correspond pas à
      sa documentation.
@@ -36,7 +31,9 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
   convertit aussi tout fichier `.txt` en `.csv`. Des données tabulaires
   s'écrivent souvent en `.txt`, mais un texte libre en `.txt` ne doit pas être
   converti : il faut savoir distinguer les deux. Constaté sur la démo le
-  2026-10-20. À voir avec un audit d'ASHE.
+  2026-10-20. Autre point : ASHE appelle `lubridate` sans le déclarer dans
+  son `DESCRIPTION`. Le test de `clean_datasets_files()` ne tourne donc
+  qu'en local, pas dans `R CMD check`. À voir avec un audit d'ASHE.
 - **Aligner les données sur des vocabulaires contrôlés pendant la curation**
   (unités QUDT ou UCUM, par exemple). Horizon lointain, et peut-être pas dans
   dataverseuR : le sujet dépasse le paquet. Les premiers essais sont dans le

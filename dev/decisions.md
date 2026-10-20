@@ -46,3 +46,18 @@ travail ; git garde l'historique.
   (https://demo.recherche.data.gouv.fr, `.env-demo`), et nettoient derrière
   eux. Un jeu de l'entrepôt ne sert qu'en lecture : MAKAHO, dont Lou est
   l'auteur, ou un grand jeu public riche en métadonnées.
+
+## 2026-10-20, en reprenant les chemins
+
+- Une fonction reçoit les dossiers ou les fichiers sur lesquels elle
+  travaille ; le DOI ne sert qu'à parler à l'API. Ce qui est purement local
+  (convertir des tableaux) ne prend pas de DOI. Avant, trois fonctions
+  déduisaient leurs dossiers du DOI (`doi_…/`, `doi_…_cleaned/`), ce qui les
+  empêchait d'écrire ailleurs, par exemple dans le dossier par jeu du skill de
+  curation (`original/`, `cleaned/`).
+- Un README généré décrit les fichiers par leur chemin dans le jeu (`.`,
+  `./data`), jamais par un chemin de la machine.
+- Le paquet attend la levée du verrou d'un jeu avant toute écriture, plutôt
+  que d'attendre un temps fixe ou de relancer une requête. Juste après l'ajout
+  d'un tableau, Dataverse verrouille le jeu le temps de le convertir, et une
+  écriture pendant ce verrou échoue, ou peut laisser le jeu verrouillé.
