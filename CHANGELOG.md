@@ -5,6 +5,8 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+## [0.4.0] - 2026-10-20
+
 ### Modifié
 
 - Les fonctions sur les fichiers reçoivent leurs dossiers au lieu de les
