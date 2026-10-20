@@ -9,7 +9,7 @@ authors:
     email: "louis.heraut@inrae.fr"
     affiliation: "INRAE, UR RiverLy, Villeurbanne, France"
     orcid: "https://orcid.org/0009-0006-4372-0923"
-version: "0.3.0"
+version: "0.3.1"
 date-released: "2026-10-20"
 license: GPL-3.0-or-later
 repository-code: "https://github.com/lou-heraut/dataverseuR"

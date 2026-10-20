@@ -5,6 +5,8 @@ version [SemVer](https://semver.org/lang/fr/).
 
 ## Non publié
 
+## [0.3.1] - 2026-10-20
+
 ### Corrigé
 
 - `add_datasets_files()` attend, avant chaque envoi, que le jeu ne soit plus
