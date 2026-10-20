@@ -6,20 +6,16 @@ Ce qui reste à faire. Le plan vient de l'audit du 2026-10-19
 
 ## Prochaines étapes
 
-1. **Finir la réécriture de la conversion des métadonnées**
-   (`dev/plans/2026-10-19_metadata-conversion.md`). Reste l'essai de bout en
-   bout sur l'instance de démonstration. Il attend un nouveau jeton dans
-   `.env-demo`, car l'actuel est refusé (« Bad API key »).
-2. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
+1. **Reprendre `dev/main.R`.** Garder sa forme (`to_do`, un bloc par action).
    Aujourd'hui, 4 blocs sur 10 appellent des fonctions disparues, 2 autres des
    variables qu'aucun bloc ne définit, et il reste un chemin absolu vers ASHE
    et des `stop()` de travail. Le script charge `.env-entrepot` (la
    production) par défaut, et ses blocs visent des jeux réels.
-3. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
+2. **Les chemins.** Leur gestion n'est pas toujours bonne : les fonctions de
    téléchargement, de nettoyage et de README déduisent leurs dossiers du DOI
    (`{doi}/`, `{doi}_cleaned/`), et le champ `Path:` du README écrit le chemin
    local. Trouver quelque chose de plus simple et plus propre.
-4. **Petits défauts.**
+3. **Petits défauts.**
    - « directoryies » dans `get_info_dir()`.
    - L'argument inutilisé `dataverse` de `modify_datasets()`.
    - La valeur de retour de `get_datasets_metadata()`, qui ne correspond pas à

@@ -15,6 +15,8 @@ modèle. Les repères du projet sont dans `dev/decisions.md`.
   par action) ; il se lance depuis la racine, avec `devtools::load_all()`.
 - À la racine, deux fichiers d'environnement non versionnés : `.env-demo` pour
   l'instance de démonstration, `.env-entrepot` pour l'entrepôt en production.
+- Avant une version, `Rscript dev/demo_check.R` vérifie la conversion des
+  métadonnées de bout en bout sur l'instance de démonstration.
 
 ## Ce qu'il ne faut pas casser
 

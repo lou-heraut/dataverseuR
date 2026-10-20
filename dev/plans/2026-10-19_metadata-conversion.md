@@ -1,6 +1,7 @@
 # Réécriture de la conversion des métadonnées
 
-État : en cours, ouvert le 2026-10-19. Point 1 de `ROADMAP.md`.
+État : terminé le 2026-10-20 (version 0.3.0). Ouvert le 2026-10-19 pour le
+point 1 de `ROADMAP.md`.
 
 ## Pourquoi
 
@@ -57,10 +58,15 @@ type.
    passent.
 4. [x] `R CMD check --as-cran` : 0 erreur, 0 avertissement. Reste la note sur
    `dotenv`, déjà notée dans `ROADMAP.md`.
-5. [ ] Essai de bout en bout sur l'instance de démonstration : créer un jeu
-   depuis le YAML inventé, relire ses métadonnées, comparer, puis supprimer le
-   brouillon. Bloqué le 2026-10-20 : le jeton de `.env-demo` est refusé
-   (« Bad API key »), probablement expiré.
+5. [x] Essai de bout en bout sur l'instance de démonstration, dans la
+   collection `espacegenerique` (le compte ne peut pas déposer dans `inrae`) :
+   - à la création, les 31 valeurs envoyées reviennent à l'identique ;
+   - après une modification, elles reviennent aussi à l'identique ;
+   - le brouillon est ensuite supprimé.
+
+   Dataverse range les valeurs d'un vocabulaire contrôlé dans son propre ordre
+   (English avant French), sans changer les valeurs. L'essai se relance par
+   `Rscript dev/demo_check.R`.
 6. [x] Lecture seule de MAKAHO (doi:10.57745/LNBEGZ) par l'API publique, sans
    jeton : télécharger, convertir, regénérer, comparer.
    - Nouveau code : les 102 valeurs en ligne reviennent à l'identique.
@@ -81,4 +87,16 @@ type.
   l'ancien code les remettait à leur place.
 - Dans un 14e fichier (`series-horizons/metadata/all.yml`), un
   `datasetContactEmail` est écrit hors de son élément.
-- Avec la réécriture, ces fichiers sont à réaligner avant de resservir.
+- Avec la réécriture, ces fichiers étaient à réaligner avant de resservir.
+  C'est fait le 2026-10-20 dans `dataverseuR_toolbox`, pour les 14 modèles
+  d'Explore2 :
+  - les mots-clés sont réécrits d'après les jeux publiés, et le contact est
+    réindenté ;
+  - comparés à 22 jeux publiés, en lecture seule, les modèles ne diffèrent
+    plus que par `relatedMaterial` ;
+  - chaque modèle, une fois ses trous remplis par un jeu publié puis créé sur
+    la démo, redonne ses 23 champs, sauf `relatedMaterial`.
+
+  Cet écart restant vient des jeux publiés, qui pointent encore vers
+  `github.com/louis-heraut/…`, l'ancien nom du compte. Les modèles, eux, sont
+  à jour.
